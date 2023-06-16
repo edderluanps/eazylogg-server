@@ -21,7 +21,7 @@ O serviço é dividido em:
 
 ## UML
 
-<img src="https://github.com/edderluanps/eazylogg-server/blob/60dfe898a3eda0dc3cacada404c9e3b42ddaa209/assets/uml.png">
+<img src="https://github.com/edderluanps/eazylogg-server/blob/3b973a60d6070d81ee9d51ae879f674ca59eeea3/assets/uml.png">
 
 
 ## Tecnologias
