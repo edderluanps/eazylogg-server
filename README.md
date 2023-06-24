@@ -19,7 +19,7 @@ O serviço é dividido em:
   * Client side: Parte visível ao usuário onde será possível fazer cadastros, ver catálogos e acompanhar as entregas via interface de usuário. O Client Side é composto por Aplicação Web com Landing Page e Plataforma responsiva para multiplos dispositivos, e uma Aplicação Mobile híbrida para Android e IOS. A plataforma é responsável por gerenciar os perfis de cada tipo de usuário (Admins, Empresas e Entregadores), e entregar as informações conforme o grau hierárquico dos usuarios.
 
 
-## UML
+## Diagrama
 
 <img src="https://github.com/edderluanps/eazylogg-server/blob/3b973a60d6070d81ee9d51ae879f674ca59eeea3/assets/uml.png">
 
