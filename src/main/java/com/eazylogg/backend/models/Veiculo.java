@@ -1,6 +1,5 @@
 package com.eazylogg.backend.models;
 
-import com.eazylogg.backend.BackendApplication;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,9 +9,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "tb_usuario")
+@Table(name = "tb_veiculo")
 @Data
-public class Usuario implements Serializable {
+public class Veiculo implements Serializable {
 
     public static final long serialVersionUID = 1L;
 
@@ -21,26 +20,20 @@ public class Usuario implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
-    private String tipoPerfil;
+    private String porte;
 
-    private String nome;
+    private String placa;
 
-    private String cpfOuCnpj;
+    private String marca;
+
+    private String modelo;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataNascimento;
+    private LocalDate ano;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataCadastro;
+    private String cor;
 
-    private Endereco enderecoId;
-
-    private String email;
-
-    private String senha;
-
-    private String telefone;
+    private Usuario usuarioId;
 
     private boolean ativo;
-
 }
