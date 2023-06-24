@@ -21,7 +21,7 @@ O serviço é dividido em:
 
 ## Diagrama
 
-<img src="https://github.com/edderluanps/eazylogg-server/blob/3b973a60d6070d81ee9d51ae879f674ca59eeea3/assets/uml.png">
+<img src="https://github.com/edderluanps/eazylogg-server/blob/71410c316506c4c8c751c5930403a5c433a71ff3/assets/diagrama.png">
 
 
 ## Tecnologias
