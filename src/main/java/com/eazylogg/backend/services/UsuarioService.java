@@ -2,7 +2,6 @@ package com.eazylogg.backend.services;
 
 import com.eazylogg.backend.models.Usuario;
 import com.eazylogg.backend.repositories.UsuarioRepository;
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,22 +19,22 @@ public class UsuarioService {
         return usuarioRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado!"));
     }
 
-    public List<Usuario> getUsuarioLista(){
+    public List<Usuario> getListaUsuarios(){
         return usuarioRepository.findAll();
     }
 
-    public Usuario salvar(Usuario usuario) {
+    public Usuario salvarUsuario(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
 
-    public void atualizar(Long id, Usuario usuario) {
+    public void atualizarUsuario(Long id, Usuario usuario) {
         usuarioRepository.findById(id).map(obj -> {
             usuario.setId(obj.getId());
             return usuarioRepository.save(usuario);
         }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado!"));
     }
 
-    public void delete(Long id) {
+    public void deletarUsuario(Long id) {
         usuarioRepository.findById(id).map(obj -> {
             usuarioRepository.delete(obj);
             return Void.TYPE;

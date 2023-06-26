@@ -18,7 +18,7 @@ public class UsuarioController {
 
     @GetMapping
     public List<Usuario> getAll() {
-        return usuarioService.getUsuarioLista();
+        return usuarioService.getListaUsuarios();
     }
 
     @GetMapping("/{id}")
@@ -29,18 +29,18 @@ public class UsuarioController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Usuario salvar(@RequestBody @Validated Usuario usuario){
-        return usuarioService.salvar(usuario);
+        return usuarioService.salvarUsuario(usuario);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void atualizar(@PathVariable Long id, @RequestBody Usuario usuario){
-        usuarioService.atualizar(id, usuario);
+        usuarioService.atualizarUsuario(id, usuario);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id){
-        usuarioService.delete(id);
+        usuarioService.deletarUsuario(id);
     }
 }
