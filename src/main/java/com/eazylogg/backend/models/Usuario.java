@@ -1,6 +1,8 @@
 package com.eazylogg.backend.models;
 
 import com.eazylogg.backend.BackendApplication;
+import com.eazylogg.backend.models.enums.TipoCliente;
+import com.eazylogg.backend.models.enums.TipoPerfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,6 +10,9 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -21,8 +26,6 @@ public class Usuario implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
-    private String tipoPerfil;
-
     private String nome;
 
     private String cpfOuCnpj;
@@ -32,6 +35,8 @@ public class Usuario implements Serializable {
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro;
+
+    private Integer tipoCliente;
 
     private Endereco enderecoId;
 
@@ -43,4 +48,42 @@ public class Usuario implements Serializable {
 
     private boolean ativo;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "perfis")
+    private Set<Integer> perfis = new HashSet<>();
+
+    public Usuario() {
+        addPerfis(TipoPerfil.CLIENTE);
+    }
+
+    public Usuario(Long id, String nome, String cpfOuCnpj, LocalDate dataNascimento, LocalDate dataCadastro, TipoCliente tipoCliente, Endereco enderecoId, String email, String senha, String telefone, boolean ativo) {
+        this.id = id;
+        addPerfis(TipoPerfil.CLIENTE);
+        this.nome = nome;
+        this.cpfOuCnpj = cpfOuCnpj;
+        this.dataNascimento = dataNascimento;
+        this.dataCadastro = dataCadastro;
+        this.tipoCliente = (tipoCliente == null) ? null : tipoCliente.getCod();
+        this.enderecoId = enderecoId;
+        this.email = email;
+        this.senha = senha;
+        this.telefone = telefone;
+        this.ativo = ativo;
+    }
+
+    public Set<TipoPerfil> getPerfis() {
+        return perfis.stream().map(obj -> TipoPerfil.toEnum(obj)).collect(Collectors.toSet());
+    }
+
+    public void addPerfis(TipoPerfil perfil) {
+        perfis.add(perfil.getCod());
+    }
+
+    public TipoCliente getTipoCliente() {
+        return TipoCliente.toEnum(tipoCliente);
+    }
+
+    public void setTipoCliente(TipoCliente tipoCliente) {
+        this.tipoCliente = tipoCliente.getCod();
+    }
 }
