@@ -4,17 +4,19 @@ import com.eazylogg.backend.models.Avaliacao;
 import com.eazylogg.backend.repositories.AvaliacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@Service
 public class AvaliacaoService {
 
     @Autowired
     private AvaliacaoRepository avaliacaoRepository;
 
-    public List<Avaliacao> getListaAvaliacoes(){
-        return avaliacaoRepository.findAll();
+    public List<Avaliacao> getAvaliacaoUsuario(Long usuarioId){
+        return avaliacaoRepository.findAvaliacaoPorId(usuarioId);
     }
 
     public Avaliacao salvarAvaliacao(Avaliacao avaliacao){
@@ -24,7 +26,7 @@ public class AvaliacaoService {
     public void atualizarAvaliacao(Long id, Avaliacao avaliacao){
         avaliacaoRepository.findById(id).map(obj -> {
             avaliacao.setId(obj.getId());
-            return Void.TYPE;
-        }).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Endereco não encontrado!"));
+            return avaliacaoRepository.save(avaliacao);
+        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Avaliação não encontrada!"));
     }
 }

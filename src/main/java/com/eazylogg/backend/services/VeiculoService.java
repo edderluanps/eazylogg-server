@@ -1,13 +1,16 @@
 package com.eazylogg.backend.services;
 
+import com.eazylogg.backend.models.Usuario;
 import com.eazylogg.backend.models.Veiculo;
 import com.eazylogg.backend.repositories.VeiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@Service
 public class VeiculoService {
 
     @Autowired
@@ -17,7 +20,7 @@ public class VeiculoService {
         return veiculoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Veículo não encontrado!"));
     }
 
-    public List<Veiculo> getListaVeiculos(Long id){
+    public List<Veiculo> getListaVeiculos(){
         return veiculoRepository.findAll();
     }
 
@@ -25,11 +28,11 @@ public class VeiculoService {
         return veiculoRepository.save(veiculo);
     }
 
-    public void atualizarVeiculo(Long id, Veiculo veiculo){
+    public void atualizarVeiculo(Long id, Veiculo veiculo) {
         veiculoRepository.findById(id).map(obj -> {
             veiculo.setId(obj.getId());
-            return Void.TYPE;
-        }).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Veículo não encontrado!"));
+            return veiculoRepository.save(veiculo);
+        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Veículo não encontrado!"));
     }
 
     public void deletarVeiculo(Long id) {

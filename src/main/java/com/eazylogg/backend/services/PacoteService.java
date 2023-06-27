@@ -4,10 +4,12 @@ import com.eazylogg.backend.models.Pacote;
 import com.eazylogg.backend.repositories.PacoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@Service
 public class PacoteService {
 
     @Autowired
@@ -17,7 +19,7 @@ public class PacoteService {
         return pacoteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pacote não encontrado!"));
     }
 
-    public List<Pacote> getListaPacotes(Long id){
+    public List<Pacote> getListaPacotes(){
         return pacoteRepository.findAll();
     }
 
@@ -28,8 +30,8 @@ public class PacoteService {
     public void atualizarPacote(Long id, Pacote pacote){
         pacoteRepository.findById(id).map(obj -> {
             pacote.setId(obj.getId());
-            return Void.TYPE;
-        }).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pacote não encontrado!"));
+            return pacoteRepository.save(pacote);
+        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pacote não encontrado!"));
     }
 
     public void deletarPacote(Long id) {
