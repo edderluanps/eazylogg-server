@@ -1,16 +1,18 @@
 package com.eazylogg.backend.models;
 
-import com.eazylogg.backend.BackendApplication;
 import com.eazylogg.backend.models.enums.TipoCliente;
 import com.eazylogg.backend.models.enums.TipoPerfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -51,6 +53,14 @@ public class Usuario implements Serializable {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "perfis")
     private Set<Integer> perfis = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Avaliacao> avaliacao = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "avaliador", cascade = CascadeType.ALL)
+    private List<Avaliacao> avaliacaoRef = new ArrayList<>();
 
     public Usuario() {
         addPerfis(TipoPerfil.CLIENTE);

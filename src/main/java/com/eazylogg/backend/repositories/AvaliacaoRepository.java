@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Long> {
 
-    @Transactional(readOnly = true)
-    @Query("SELECT a FROM Avaliacao a WHERE a.usuarioId = id")
-    public List<Avaliacao> findAvaliacaoPorId(@Param("id") Long usuarioId);
+    //@Transactional(readOnly = true)
+    //@Query("SELECT a FROM Avaliacao a WHERE a.usuarioId = id")
+    //public List<Avaliacao> findAvaliacaoPorId(@Param("id") Long usuarioId);
 }

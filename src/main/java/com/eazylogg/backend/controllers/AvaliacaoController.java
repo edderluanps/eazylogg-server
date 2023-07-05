@@ -16,6 +16,15 @@ public class AvaliacaoController {
     @Autowired
     private AvaliacaoService avaliacaoService;
 
+    @GetMapping
+    public List<Avaliacao> getAll(){
+        return avaliacaoService.getListaAvaliacao();
+    }
+
+    @GetMapping("/{id}")
+    public Avaliacao getById(@PathVariable Long id){
+        return avaliacaoService.getAvaliacao(id);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

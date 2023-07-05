@@ -1,6 +1,5 @@
 package com.eazylogg.backend.services;
 
-import com.eazylogg.backend.models.Usuario;
 import com.eazylogg.backend.models.Veiculo;
 import com.eazylogg.backend.repositories.VeiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

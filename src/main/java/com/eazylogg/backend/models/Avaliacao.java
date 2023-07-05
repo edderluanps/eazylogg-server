@@ -1,10 +1,13 @@
 package com.eazylogg.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_avaliacao")
@@ -20,8 +23,12 @@ public class Avaliacao implements Serializable {
 
     private Double nota;
 
-    private Usuario usuarioId;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
-    private Usuario usuarioRef;
+    @ManyToOne
+    @JoinColumn(name = "avaliador_id")
+    private Usuario avaliador;
 
 }
