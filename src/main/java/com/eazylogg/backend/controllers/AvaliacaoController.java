@@ -26,6 +26,11 @@ public class AvaliacaoController {
         return avaliacaoService.getAvaliacao(id);
     }
 
+    @GetMapping("/media/{id}")
+    public Double getMediaAvaliacao(@PathVariable Long id){
+        return avaliacaoService.getMediaAvaliacao(id);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Avaliacao salvar(@RequestBody @Validated Avaliacao avaliacao){
