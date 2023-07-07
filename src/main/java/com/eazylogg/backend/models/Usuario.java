@@ -40,13 +40,16 @@ public class Usuario implements Serializable {
 
     private Integer tipoCliente;
 
-    private Endereco enderecoId;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Endereco> enderecos = new ArrayList<>();
 
     private String email;
 
     private String senha;
 
-    private String telefone;
+    @ElementCollection
+    @CollectionTable(name = "telefone")
+    private Set<String> telefone = new HashSet<>();
 
     private boolean ativo;
 
@@ -66,7 +69,7 @@ public class Usuario implements Serializable {
         addPerfis(TipoPerfil.CLIENTE);
     }
 
-    public Usuario(Long id, String nome, String cpfOuCnpj, LocalDate dataNascimento, LocalDate dataCadastro, TipoCliente tipoCliente, Endereco enderecoId, String email, String senha, String telefone, boolean ativo) {
+    public Usuario(Long id, String nome, String cpfOuCnpj, LocalDate dataNascimento, LocalDate dataCadastro, TipoCliente tipoCliente, String email, String senha, boolean ativo) {
         this.id = id;
         addPerfis(TipoPerfil.CLIENTE);
         this.nome = nome;
@@ -74,10 +77,8 @@ public class Usuario implements Serializable {
         this.dataNascimento = dataNascimento;
         this.dataCadastro = dataCadastro;
         this.tipoCliente = (tipoCliente == null) ? null : tipoCliente.getCod();
-        this.enderecoId = enderecoId;
         this.email = email;
         this.senha = senha;
-        this.telefone = telefone;
         this.ativo = ativo;
     }
 
@@ -95,5 +96,13 @@ public class Usuario implements Serializable {
 
     public void setTipoCliente(TipoCliente tipoCliente) {
         this.tipoCliente = tipoCliente.getCod();
+    }
+
+    public List<Endereco> getEndereco() {
+        return enderecos;
+    }
+
+    public void setEndereco(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
     }
 }
