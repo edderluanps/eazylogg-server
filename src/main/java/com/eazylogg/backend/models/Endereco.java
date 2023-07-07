@@ -1,8 +1,10 @@
 package com.eazylogg.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +12,8 @@ import java.io.Serializable;
 @Entity
 @Table(name = "tb_endereco")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Endereco implements Serializable {
 
     public static final long serialVersionUID = 1L;
@@ -42,17 +46,4 @@ public class Endereco implements Serializable {
 
     private boolean ativo;
 
-    public Endereco(Long id, String logradouro, String numero, String cep, String complemento, String bairro, String cidade, String estado, String pais, Usuario usuario, boolean ativo) {
-        this.id = id;
-        this.logradouro = logradouro;
-        this.numero = numero;
-        this.cep = cep;
-        this.complemento = complemento;
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.pais = pais;
-        this.usuario = usuario;
-        this.ativo = ativo;
-    }
 }
