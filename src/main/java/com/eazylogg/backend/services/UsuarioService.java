@@ -7,11 +7,12 @@ import com.eazylogg.backend.models.dto.UsuarioNewDTO;
 import com.eazylogg.backend.models.enums.TipoCliente;
 import com.eazylogg.backend.repositories.AvaliacaoRepository;
 import com.eazylogg.backend.repositories.UsuarioRepository;
+import com.eazylogg.backend.services.exceptions.DataIntegrityException;
+import com.eazylogg.backend.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class UsuarioService {
     private AvaliacaoRepository avaliacaoRepository;
 
     public Usuario getUsuario(Long id){
-        return usuarioRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado!"));
+        return usuarioRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado!"));
     }
 
     public List<Usuario> getListaUsuarios(){
@@ -44,10 +45,12 @@ public class UsuarioService {
     }
 
     public void deletarUsuario(Long id) {
-        usuarioRepository.findById(id).map(obj -> {
-            usuarioRepository.delete(obj);
-            return Void.TYPE;
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado!"));
+        getUsuario(id);
+        try{
+            usuarioRepository.deleteById(id);
+        }catch(DataIntegrityViolationException ex){
+            throw new DataIntegrityException("Não foi possivel deletar o Usuário: Usuário Ativo.");
+        }
     }
 
     public Usuario fromDTO(UsuarioDTO usuarioDTO) {

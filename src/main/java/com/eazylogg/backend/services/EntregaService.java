@@ -2,10 +2,11 @@ package com.eazylogg.backend.services;
 
 import com.eazylogg.backend.models.Entrega;
 import com.eazylogg.backend.repositories.EntregaRepository;
+import com.eazylogg.backend.services.exceptions.DataIntegrityException;
+import com.eazylogg.backend.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class EntregaService {
     private EntregaRepository entregaRepository;
 
     public Entrega getEntrega(Long id){
-        return entregaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Entrega não encontrada!"));
+        return entregaRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Entrega não encontrado!"));
     }
 
     public List<Entrega> getListaEntregas(){
@@ -31,14 +32,16 @@ public class EntregaService {
         entregaRepository.findById(id).map(obj -> {
             entrega.setId(obj.getId());
             return entregaRepository.save(entrega);
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Entrega não encontrada!"));
+        }).orElseThrow(() -> new ObjectNotFoundException("Entrega não encontrado!"));
     }
 
     public void deletarEntrega(Long id) {
-        entregaRepository.findById(id).map(obj -> {
-            entregaRepository.delete(obj);
-            return Void.TYPE;
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Entrega não encontrada!"));
+        getEntrega(id);
+        try{
+            entregaRepository.deleteById(id);
+        }catch(DataIntegrityViolationException ex){
+            throw new DataIntegrityException("Não foi possivel deletar o Endereço: Item Ativo.");
+        }
     }
 
 }

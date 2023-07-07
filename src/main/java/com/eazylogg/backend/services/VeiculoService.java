@@ -2,10 +2,11 @@ package com.eazylogg.backend.services;
 
 import com.eazylogg.backend.models.Veiculo;
 import com.eazylogg.backend.repositories.VeiculoRepository;
+import com.eazylogg.backend.services.exceptions.DataIntegrityException;
+import com.eazylogg.backend.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class VeiculoService {
     private VeiculoRepository veiculoRepository;
 
     public Veiculo getVeiculo(Long id){
-        return veiculoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Veículo não encontrado!"));
+        return veiculoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Veículo não encontrado!"));
     }
 
     public List<Veiculo> getListaVeiculos(){
@@ -31,14 +32,16 @@ public class VeiculoService {
         veiculoRepository.findById(id).map(obj -> {
             veiculo.setId(obj.getId());
             return veiculoRepository.save(veiculo);
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Veículo não encontrado!"));
+        }).orElseThrow(() -> new ObjectNotFoundException("Veículo não encontrado!"));
     }
 
     public void deletarVeiculo(Long id) {
-        veiculoRepository.findById(id).map(obj -> {
-            veiculoRepository.delete(obj);
-            return Void.TYPE;
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Veículo não encontrado!"));
+        getVeiculo(id);
+        try{
+            veiculoRepository.deleteById(id);
+        }catch(DataIntegrityViolationException ex){
+            throw new DataIntegrityException("Não foi possivel deletar o Veículo: Item Ativo.");
+        }
     }
 
 }

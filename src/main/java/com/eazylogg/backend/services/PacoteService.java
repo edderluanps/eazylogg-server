@@ -2,10 +2,11 @@ package com.eazylogg.backend.services;
 
 import com.eazylogg.backend.models.Pacote;
 import com.eazylogg.backend.repositories.PacoteRepository;
+import com.eazylogg.backend.services.exceptions.DataIntegrityException;
+import com.eazylogg.backend.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class PacoteService {
     private PacoteRepository pacoteRepository;
 
     public Pacote getPacote(Long id){
-        return pacoteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pacote não encontrado!"));
+        return pacoteRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Pacote não encontrado!"));
     }
 
     public List<Pacote> getListaPacotes(){
@@ -31,14 +32,16 @@ public class PacoteService {
         pacoteRepository.findById(id).map(obj -> {
             pacote.setId(obj.getId());
             return pacoteRepository.save(pacote);
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pacote não encontrado!"));
+        }).orElseThrow(() -> new ObjectNotFoundException("Pacote não encontrado!"));
     }
 
     public void deletarPacote(Long id) {
-        pacoteRepository.findById(id).map(obj -> {
-            pacoteRepository.delete(obj);
-            return Void.TYPE;
-        }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pacote não encontrado!"));
+        getPacote(id);
+        try{
+            pacoteRepository.deleteById(id);
+        }catch(DataIntegrityViolationException ex){
+            throw new DataIntegrityException("Não foi possivel deletar o Pacote: Item Ativo.");
+        }
     }
 
 }
