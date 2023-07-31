@@ -41,7 +41,7 @@ public class Usuario implements Serializable {
     private Integer tipoCliente;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Endereco> enderecos = new ArrayList<>();
+    private List<Endereco> endereco = new ArrayList<>();
 
     private String email;
 
@@ -64,6 +64,10 @@ public class Usuario implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "avaliador", cascade = CascadeType.ALL)
     private List<Avaliacao> avaliacaoRef = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Veiculo> veiculos = new ArrayList<>();
 
     public Usuario() {
         addPerfis(TipoPerfil.CLIENTE);
@@ -99,10 +103,10 @@ public class Usuario implements Serializable {
     }
 
     public List<Endereco> getEndereco() {
-        return enderecos;
+        return endereco;
     }
 
-    public void setEndereco(List<Endereco> enderecos) {
-        this.enderecos = enderecos;
+    public void setEndereco(List<Endereco> endereco) {
+        this.endereco = endereco;
     }
 }

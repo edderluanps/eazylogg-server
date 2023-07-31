@@ -1,5 +1,6 @@
 package com.eazylogg.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,6 +21,8 @@ public class Pacote implements Serializable {
 
     private String porte;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "contratante_id")
     private Usuario contratanteId;
 
     private String cpfRecebedor;
@@ -27,4 +30,12 @@ public class Pacote implements Serializable {
     private String obs;
 
     private boolean ativo;
+
+    public Usuario getContratanteId() {
+        return contratanteId;
+    }
+
+    public void setContratanteId(Usuario contratanteId) {
+        this.contratanteId = contratanteId;
+    }
 }

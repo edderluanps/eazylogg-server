@@ -30,11 +30,13 @@ public class AvaliacaoService {
     public Double getMediaAvaliacao(Long id){
         Usuario user = usuarioRepository.findById(id).get();
         Double avg = avaliacaoRepository.findAvgUser(user.getId());
-        System.out.println(avg);
         return avg;
     }
 
-    public Avaliacao salvarAvaliacao(Avaliacao avaliacao){
+    public Avaliacao salvarAvaliacao(Avaliacao avaliacao) {
+        if (avaliacao.getAvaliador().getId() == avaliacao.getUsuario().getId()){
+            throw new ObjectNotFoundException("Um usuário não pode se autoavaliar!");
+        }
         return avaliacaoRepository.save(avaliacao);
     }
 

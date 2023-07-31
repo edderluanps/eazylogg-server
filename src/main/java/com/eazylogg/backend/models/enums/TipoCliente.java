@@ -2,8 +2,8 @@ package com.eazylogg.backend.models.enums;
 
 public enum TipoCliente {
 
-    PESSOA_FISICA(1, "Pessoa Física"),
-    PESSOA_JURIDICA(2, "Pessoa Jurídica");
+    PESSOA_FISICA(1, "PESSOA_FISICA"),
+    PESSOA_JURIDICA(2, "PESSOA_JURIDICA");
 
     private int cod;
     private String descricao;

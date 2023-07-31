@@ -28,12 +28,13 @@ public class Veiculo implements Serializable {
 
     private String modelo;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate ano;
+    private String ano;
 
     private String cor;
 
-    private Usuario usuarioId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuario")
+    private Usuario usuario;
 
     private boolean ativo;
 }

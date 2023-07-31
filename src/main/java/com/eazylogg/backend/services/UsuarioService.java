@@ -14,6 +14,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -59,8 +60,11 @@ public class UsuarioService {
     }
 
     public Usuario fromDTO(UsuarioNewDTO usuarioDTO) {
-        Usuario usuario = new Usuario(null  , usuarioDTO.getNome(), usuarioDTO.getEmail(),
-                usuarioDTO.getDataNascimento(), usuarioDTO.getDataCadastro(), TipoCliente.toEnum(usuarioDTO.getTipoCliente()), usuarioDTO.getEmail(), usuarioDTO.getSenha(), true);
+
+        LocalDate dataAtual = LocalDate.now();
+
+        Usuario usuario = new Usuario(null  , usuarioDTO.getNome(), usuarioDTO.getCpfOuCnpj(),
+                usuarioDTO.getDataNascimento(), dataAtual, TipoCliente.toEnum(usuarioDTO.getTipoCliente()), usuarioDTO.getEmail(), usuarioDTO.getSenha(), true);
 
         Endereco endereco = new Endereco(null, usuarioDTO.getLogradouro(), usuarioDTO.getNumero(), usuarioDTO.getCep(),usuarioDTO.getComplemento(), usuarioDTO.getBairro(),
                 usuarioDTO.getCidade(), usuarioDTO.getEstado(), usuarioDTO.getPais(), usuario, true);
