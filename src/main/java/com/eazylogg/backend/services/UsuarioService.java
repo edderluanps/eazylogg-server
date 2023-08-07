@@ -5,12 +5,16 @@ import com.eazylogg.backend.models.Usuario;
 import com.eazylogg.backend.models.dto.UsuarioDTO;
 import com.eazylogg.backend.models.dto.UsuarioNewDTO;
 import com.eazylogg.backend.models.enums.TipoCliente;
+import com.eazylogg.backend.models.enums.TipoPerfil;
 import com.eazylogg.backend.repositories.AvaliacaoRepository;
 import com.eazylogg.backend.repositories.UsuarioRepository;
+import com.eazylogg.backend.security.UserSS;
+import com.eazylogg.backend.services.exceptions.AuthorizationException;
 import com.eazylogg.backend.services.exceptions.DataIntegrityException;
 import com.eazylogg.backend.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,12 +25,19 @@ import java.util.List;
 public class UsuarioService {
 
     @Autowired
+    private BCryptPasswordEncoder bpe;
+
+    @Autowired
     private UsuarioRepository usuarioRepository;
 
     @Autowired
     private AvaliacaoRepository avaliacaoRepository;
 
     public Usuario getUsuario(Long id){
+        UserSS user = UserService.authenticated();
+        if (user == null || !user.hasRole(TipoPerfil.ADMIN) && !id.equals(user.getId())) {
+            throw new AuthorizationException("Acesso negado");
+        }
         return usuarioRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado!"));
     }
 
@@ -64,7 +75,7 @@ public class UsuarioService {
         LocalDate dataAtual = LocalDate.now();
 
         Usuario usuario = new Usuario(null  , usuarioDTO.getNome(), usuarioDTO.getCpfOuCnpj(),
-                usuarioDTO.getDataNascimento(), dataAtual, TipoCliente.toEnum(usuarioDTO.getTipoCliente()), usuarioDTO.getEmail(), usuarioDTO.getSenha(), true);
+                usuarioDTO.getDataNascimento(), dataAtual, TipoCliente.toEnum(usuarioDTO.getTipoCliente()), usuarioDTO.getEmail(), bpe.encode(usuarioDTO.getSenha()), true);
 
         Endereco endereco = new Endereco(null, usuarioDTO.getLogradouro(), usuarioDTO.getNumero(), usuarioDTO.getCep(),usuarioDTO.getComplemento(), usuarioDTO.getBairro(),
                 usuarioDTO.getCidade(), usuarioDTO.getEstado(), usuarioDTO.getPais(), usuario, true);

@@ -4,6 +4,7 @@ import com.eazylogg.backend.models.Avaliacao;
 import com.eazylogg.backend.services.AvaliacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +17,13 @@ public class AvaliacaoController {
     @Autowired
     private AvaliacaoService avaliacaoService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<Avaliacao> getAll(){
         return avaliacaoService.getListaAvaliacao();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public Avaliacao getById(@PathVariable Long id){
         return avaliacaoService.getAvaliacao(id);
