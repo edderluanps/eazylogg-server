@@ -1,7 +1,6 @@
 package com.eazylogg.backend.services;
 
 import com.eazylogg.backend.models.Entrega;
-import com.eazylogg.backend.models.PgCartao;
 import com.eazylogg.backend.models.enums.EntregaStatus;
 import com.eazylogg.backend.models.enums.PagamentoStatus;
 import com.eazylogg.backend.repositories.EntregaRepository;
@@ -13,7 +12,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,6 +22,9 @@ public class EntregaService {
 
     @Autowired
     private PagamentoRepository pagamentoRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     public Entrega getEntrega(Long id){
         return entregaRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Entrega não encontrado!"));
@@ -43,6 +44,7 @@ public class EntregaService {
         entrega.getPagamento().setEntrega(entrega);
 
         pagamentoRepository.save(entrega.getPagamento());
+        //emailService.sendConfirmationEmail(entrega);
         return entregaRepository.save(entrega);
     }
 
@@ -58,7 +60,7 @@ public class EntregaService {
         try{
             entregaRepository.deleteById(id);
         }catch(DataIntegrityViolationException ex){
-            throw new DataIntegrityException("Não foi possivel deletar o Endereço: Item Ativo.");
+            throw new DataIntegrityException("Não foi possivel deletar a entrega: Item Ativo.");
         }
     }
 

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmação</title>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+
+        h1{
+            font-size: 20px;
+        }
+
+        p{
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Entrega a caminho</h1>
+    <br>
+    <p>Olá, <span th:text="${entrega.entregadorId.nome}"></span>, a entrega de nº <span th:text="${entrega.id}"> foi confirmada. </span></p>
+    <p>Aguardando pagamento para liberação.</p>
+    <br>
+    <p>Att.: EazyLogg</p>
+
+</body>
+</html>

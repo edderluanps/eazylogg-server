@@ -75,11 +75,34 @@ public class Entrega implements Serializable {
         this.ativo = ativo;
     }
 
+    public double getValorTotal() {
+        double soma = 0.0;
+        soma = valor - desconto;
+        return soma;
+    }
+
     public EntregaStatus getStatus() {
         return EntregaStatus.toEnum(status);
     }
 
     public void setStatus(EntregaStatus status) {
         this.status = status.getCod();
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Entrega nº: ");
+        sb.append(getId());
+
+        sb.append("Data de coleta: ");
+        sb.append(getDataColeta());
+
+        sb.append("Data estimada de entrega: ");
+        sb.append(getDataEntrega());
+
+        return toString();
     }
 }
