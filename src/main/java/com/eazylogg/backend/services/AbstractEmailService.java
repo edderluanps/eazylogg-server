@@ -38,4 +38,10 @@ public abstract class AbstractEmailService implements EmailService {
         return sm;
     }
 
+    @Override
+    public void sendNewPasswordEmail(Usuario usuario, String newPassword) {
+        SimpleMailMessage sm = prepareNewPasswordEmail(usuario, newPassword);
+        sendEmail(sm);
+    }
+
 }

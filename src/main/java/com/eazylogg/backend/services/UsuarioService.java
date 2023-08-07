@@ -96,4 +96,17 @@ public class UsuarioService {
         usuarioNovo.setNome(usuario.getNome());
         usuarioNovo.setEmail(usuario.getEmail());
     }
+
+    public Usuario findByEmail(String email) {
+        UserSS user = UserService.authenticated();
+        if (user == null || !user.hasRole(TipoPerfil.ADMIN) && !email.equals(user.getUsername())) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        if (usuario == null) {
+            throw new ObjectNotFoundException("Usuário não encontrado!");
+        }
+        return usuario;
+    }
 }

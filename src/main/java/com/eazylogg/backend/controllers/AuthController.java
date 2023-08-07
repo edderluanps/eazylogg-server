@@ -29,6 +29,7 @@ public class AuthController {
         UserSS user = UserService.authenticated();
         String token = jwtUtil.generateToken(user.getUsername());
         httpServletResponse.addHeader("Authorization", "Bearer " + token);
+        httpServletResponse.addHeader("access-control-expose-headers", "Authorization");
     }
 
     @GetMapping(value = "/forgot")

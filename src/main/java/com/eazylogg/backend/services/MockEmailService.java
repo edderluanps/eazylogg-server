@@ -11,10 +11,10 @@ public class MockEmailService extends AbstractEmailService{
     private static final Logger LOG = LoggerFactory.getLogger(MockEmailService.class);
 
     @Override
-    public void sendEmail(SimpleMailMessage smm) {
-        LOG.debug("Envio de email fake");
-        LOG.info(smm.toString());
-        LOG.info("email enviado");
+    public void sendEmail(SimpleMailMessage msg) {
+        LOG.info("Simulando envio de email...");
+        LOG.info(msg.toString());
+        LOG.info("Email enviado");
     }
 
     @Override
