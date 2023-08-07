@@ -48,7 +48,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] PUBLIC_MATCHERS_POST = {
             "/h2-console/**",
-            "/eazylogg/usuario/**"
+            "/eazylogg/usuario/**",
+            "/auth/forgot/**"
     };
 
     @Override

@@ -1,6 +1,7 @@
 package com.eazylogg.backend.services;
 
 import com.eazylogg.backend.models.Entrega;
+import com.eazylogg.backend.models.Usuario;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 
@@ -25,6 +26,16 @@ public abstract class AbstractEmailService implements EmailService {
         smm.setSentDate(new Date(System.currentTimeMillis()));
         smm.setText(entrega.toString());
         return smm;
+    }
+
+    protected SimpleMailMessage prepareNewPasswordEmail(Usuario usuario, String newPassword) {
+        SimpleMailMessage sm = new SimpleMailMessage();
+        sm.setTo(usuario.getEmail());
+        sm.setFrom(sender);
+        sm.setSubject("Solicitação de nova senha");
+        sm.setSentDate(new Date(System.currentTimeMillis()));
+        sm.setText("Nova senha: " + newPassword);
+        return sm;
     }
 
 }

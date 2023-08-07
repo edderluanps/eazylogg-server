@@ -1,6 +1,7 @@
 package com.eazylogg.backend.services;
 
 import com.eazylogg.backend.models.Entrega;
+import com.eazylogg.backend.models.Usuario;
 import org.springframework.mail.SimpleMailMessage;
 
 public interface EmailService {
@@ -9,5 +10,6 @@ public interface EmailService {
 
     void sendEmail(SimpleMailMessage smm);
 
+    void sendNewPasswordEmail(Usuario usuario, String newPassword);
 
 }
