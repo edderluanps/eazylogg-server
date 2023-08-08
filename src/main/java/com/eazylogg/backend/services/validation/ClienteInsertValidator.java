@@ -10,7 +10,7 @@ import com.eazylogg.backend.models.Usuario;
 import com.eazylogg.backend.models.dto.UsuarioNewDTO;
 import com.eazylogg.backend.models.enums.TipoCliente;
 import com.eazylogg.backend.repositories.UsuarioRepository;
-import com.eazylogg.backend.services.exceptions.util.BR;
+import com.eazylogg.backend.services.validation.util.BR;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, UsuarioNewDTO> {
