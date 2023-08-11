@@ -5,7 +5,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_pacote")
@@ -25,7 +28,23 @@ public class Pacote implements Serializable {
     @JoinColumn(name = "contratante_id")
     private Usuario contratanteId;
 
-    private String cpfRecebedor;
+    private String nomeDestinatario;
+
+    private String logradouroDestinatario;
+
+    private String numeroDestinatario;
+
+    private String cepDestinatario;
+
+    private String complementoDestinatario;
+
+    private String bairroDestinatario;
+
+    private String cidadeDestinatario;
+
+    private String estadoDestinatario;
+
+    private String paisDestinatario;
 
     private String obs;
 
@@ -38,4 +57,5 @@ public class Pacote implements Serializable {
     public void setContratanteId(Usuario contratanteId) {
         this.contratanteId = contratanteId;
     }
+
 }

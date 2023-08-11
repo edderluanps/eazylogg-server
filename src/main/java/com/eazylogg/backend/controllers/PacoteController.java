@@ -22,7 +22,7 @@ public class PacoteController {
     }
 
     @GetMapping("/{id}")
-    public Pacote getById(Long id){
+    public Pacote getById(@PathVariable Long id){
         return pacoteService.getPacote(id);
     }
 
@@ -43,4 +43,12 @@ public class PacoteController {
     public void deletar(@PathVariable Long id){
         pacoteService.deletarPacote(id);
     }
+
+    @GetMapping("/pesquisa")
+    public List<Pacote> pesquisarPacote(
+            @RequestParam(value = "porte", defaultValue = "") String porte,
+            @RequestParam(value = "cep", defaultValue = "") String cep){
+        return pacoteService.pesquisarPacote(porte, cep);
+    }
+
 }

@@ -20,7 +20,7 @@ public abstract class AbstractEmailService implements EmailService {
 
     protected SimpleMailMessage simpleMailMessageFromPedido(Entrega entrega) {
         SimpleMailMessage smm = new SimpleMailMessage();
-        smm.setTo(entrega.getEnderecoEntregaId().getUsuario().getEmail());
+        smm.setTo(entrega.getEnderecoColetaId().getUsuario().getEmail());
         smm.setFrom(sender);
         smm.setSubject("Entrega a caminho: Cód: " + entrega.getId());
         smm.setSentDate(new Date(System.currentTimeMillis()));

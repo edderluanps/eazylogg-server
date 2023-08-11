@@ -63,4 +63,11 @@ public class UsuarioController {
         Usuario usuario = usuarioService.findByEmail(email);
         return usuario;
     }
+
+    @GetMapping("/pesquisa")
+    public List<Usuario> pesquisarUsuarioEntregador(
+            @RequestParam(value = "pesquisa", defaultValue = "") String pesquisa,
+            @RequestParam(value = "categoria", defaultValue = "") String categoria){
+        return usuarioService.pesquisarUsuarioEntregador(pesquisa, categoria);
+    }
 }

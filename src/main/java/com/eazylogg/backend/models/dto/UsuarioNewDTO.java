@@ -1,5 +1,6 @@
 package com.eazylogg.backend.models.dto;
 
+import com.eazylogg.backend.services.validation.ClienteInsert;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
+@ClienteInsert
 public class UsuarioNewDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,6 +31,8 @@ public class UsuarioNewDTO implements Serializable {
     private String cpfOuCnpj;
 
     private Integer tipoCliente;
+
+    private String categoria;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;

@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/eazylogg/avaliacao/**",
             "/eazylogg/pacote/**",
             "/eazylogg/usuario/**",
-            "/eazylogg/entrega/**"
+            "/eazylogg/entrega/comprovante/**"
     };
 
     private static final String[] PUBLIC_MATCHERS_POST = {

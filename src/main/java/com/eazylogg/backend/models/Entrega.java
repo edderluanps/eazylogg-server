@@ -39,10 +39,6 @@ public class Entrega implements Serializable {
     @JoinColumn(name = "endereco_coleta_id")
     private Endereco enderecoColetaId;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "endereco_entrega_id")
-    private Endereco enderecoEntregaId;
-
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "entrega")
     private Pagamento pagamento;
 
@@ -59,14 +55,13 @@ public class Entrega implements Serializable {
     public Entrega(){
     }
 
-    public Entrega(Long id, Usuario entregadorId, Pacote pacoteId, LocalDate dataColeta, LocalDate dataEntrega, Endereco enderecoColetaId, Endereco enderecoEntregaId, Pagamento pagamento, EntregaStatus status, Double valor, Double desconto, String obs, boolean ativo) {
+    public Entrega(Long id, Usuario entregadorId, Pacote pacoteId, LocalDate dataColeta, LocalDate dataEntrega, Endereco enderecoColetaId, Pagamento pagamento, EntregaStatus status, Double valor, Double desconto, String obs, boolean ativo) {
         this.id = id;
         this.entregadorId = entregadorId;
         this.pacoteId = pacoteId;
         this.dataColeta = dataColeta;
         this.dataEntrega = dataEntrega;
         this.enderecoColetaId = enderecoColetaId;
-        this.enderecoEntregaId = enderecoEntregaId;
         this.pagamento = pagamento;
         this.status = (this.status == null) ? null : status.getCod();
         this.valor = valor;

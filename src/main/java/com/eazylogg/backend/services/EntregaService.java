@@ -102,7 +102,7 @@ public class EntregaService {
         Paragraph paragraph3 = new Paragraph("Remetente: " + entrega.getEnderecoColetaId().getUsuario().getNome(), fontParagraph);
         paragraph3.setAlignment(Paragraph.ALIGN_LEFT);
 
-        Paragraph paragraph4 = new Paragraph("Destinatário: " + entrega.getEnderecoEntregaId().getUsuario().getNome(), fontParagraph);
+        Paragraph paragraph4 = new Paragraph("Destinatário: " + entrega.getPacoteId().getNomeDestinatario(), fontParagraph);
         paragraph4.setAlignment(Paragraph.ALIGN_LEFT);
 
         Paragraph paragraph5 = new Paragraph("Data de coleta: " + entrega.getDataColeta(), fontParagraph);

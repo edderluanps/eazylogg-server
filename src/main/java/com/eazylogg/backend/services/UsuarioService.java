@@ -67,7 +67,7 @@ public class UsuarioService {
 
     public Usuario fromDTO(UsuarioDTO usuarioDTO) {
         return new Usuario(usuarioDTO.getId(), usuarioDTO.getNome(), usuarioDTO.getEmail(),
-                null, null, null, null, null, true);
+                null, null, null, null, null, null, true);
     }
 
     public Usuario fromDTO(UsuarioNewDTO usuarioDTO) {
@@ -75,7 +75,7 @@ public class UsuarioService {
         LocalDate dataAtual = LocalDate.now();
 
         Usuario usuario = new Usuario(null  , usuarioDTO.getNome(), usuarioDTO.getCpfOuCnpj(),
-                usuarioDTO.getDataNascimento(), dataAtual, TipoCliente.toEnum(usuarioDTO.getTipoCliente()), usuarioDTO.getEmail(), bpe.encode(usuarioDTO.getSenha()), true);
+                usuarioDTO.getDataNascimento(), dataAtual, TipoCliente.toEnum(usuarioDTO.getTipoCliente()), usuarioDTO.getCategoria(), usuarioDTO.getEmail(), bpe.encode(usuarioDTO.getSenha()), true);
 
         Endereco endereco = new Endereco(null, usuarioDTO.getLogradouro(), usuarioDTO.getNumero(), usuarioDTO.getCep(),usuarioDTO.getComplemento(), usuarioDTO.getBairro(),
                 usuarioDTO.getCidade(), usuarioDTO.getEstado(), usuarioDTO.getPais(), usuario, true);
@@ -108,5 +108,9 @@ public class UsuarioService {
             throw new ObjectNotFoundException("Usuário não encontrado!");
         }
         return usuario;
+    }
+
+    public List<Usuario> pesquisarUsuarioEntregador(String pesquisa, String categoria){
+        return usuarioRepository.pesquisa(pesquisa, categoria);
     }
 }

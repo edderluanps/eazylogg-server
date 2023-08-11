@@ -44,4 +44,8 @@ public class PacoteService {
         }
     }
 
+    public List<Pacote> pesquisarPacote(String porte, String cep){
+        return pacoteRepository.pesquisa(porte, cep);
+    }
+
 }
