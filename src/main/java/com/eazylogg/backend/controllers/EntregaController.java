@@ -2,6 +2,9 @@ package com.eazylogg.backend.controllers;
 
 import com.eazylogg.backend.models.Entrega;
 import com.eazylogg.backend.services.EntregaService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -21,34 +24,43 @@ public class EntregaController {
     @Autowired
     private EntregaService entregaService;
 
+    @ApiOperation(value = "Listar entregas")
     @GetMapping
     public List<Entrega> getAll() {
         return entregaService.getListaEntregas();
     }
 
+    @ApiOperation(value = "Buscar entrega por id")
     @GetMapping("/{id}")
     public Entrega getById(@PathVariable Long id) {
         return entregaService.getEntrega(id);
     }
 
+    @ApiOperation(value = "Cadastrar entrega")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Entrega salvar(@RequestBody @Validated Entrega entrega){
         return entregaService.salvarEntrega(entrega);
     }
 
+    @ApiOperation(value = "Atualizar entrega")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void atualizar(@PathVariable Long id, @RequestBody Entrega entrega){
         entregaService.atualizarEntrega(id, entrega);
     }
 
-    @DeleteMapping("/{id}")
+    @ApiOperation(value = "Deletar entrega")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Não é possível excluir uma entrega vinculada a um serviço ativo"),
+            @ApiResponse(code = 400, message = "Entrega inexistente.")
+    })    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id){
         entregaService.deletarEntrega(id);
     }
 
+    @ApiOperation(value = "Imprimir comprovante de entrega")
     @GetMapping("/comprovante/{id}")
     public void getComprovantePdf(@PathVariable Long id, HttpServletResponse response) throws IOException {
         response.setContentType("application/pdf");

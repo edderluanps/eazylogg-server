@@ -8,6 +8,7 @@ import com.eazylogg.backend.security.JWTUtil;
 import com.eazylogg.backend.security.UserSS;
 import com.eazylogg.backend.services.AuthService;
 import com.eazylogg.backend.services.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,7 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @ApiOperation(value = "Refresh Token")
     @GetMapping(value = "/refresh_token")
     public void refreshToken(HttpServletResponse httpServletResponse) {
         UserSS user = UserService.authenticated();
@@ -32,6 +34,7 @@ public class AuthController {
         httpServletResponse.addHeader("access-control-expose-headers", "Authorization");
     }
 
+    @ApiOperation(value = "Restaura senha")
     @GetMapping(value = "/forgot")
     public void forgot(@Valid @RequestBody EmailDTO emailDto) {
         authService.sendNewPassword(emailDto.getEmail());

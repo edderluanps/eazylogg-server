@@ -7,6 +7,10 @@ import com.eazylogg.backend.services.UsuarioService;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +25,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @ApiOperation(value = "Listar usuarios")
     @GetMapping
     public List<UsuarioDTO> getAll() {
         List<Usuario> lista = usuarioService.getListaUsuarios();
@@ -28,11 +33,13 @@ public class UsuarioController {
         return listaDto;
     }
 
+    @ApiOperation(value = "Buscar usuario por id")
     @GetMapping("/{id}")
     public Usuario getById(@PathVariable Long id) {
         return usuarioService.getUsuario(id);
     }
 
+    @ApiOperation(value = "Cadastrar usuario")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Usuario salvar(@RequestBody @Validated UsuarioNewDTO usuarioDTO){
@@ -42,6 +49,7 @@ public class UsuarioController {
         return usuario;
     }
 
+    @ApiOperation(value = "Atualizar usuario")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void atualizar(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO){
@@ -50,13 +58,18 @@ public class UsuarioController {
         usuario = usuarioService.atualizarUsuario(usuario);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @ApiOperation(value = "Deletar usuário")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = "Não é possível excluir um usuário vinculado a um serviço ativo"),
+            @ApiResponse(code = 400, message = "Usuário inexistente.")
+    })    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id){
         usuarioService.deletarUsuario(id);
     }
 
+    @ApiOperation(value = "Buscar usuario por email")
     @PutMapping("/email")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Usuario find(@RequestParam(value = "value") String email) {
@@ -64,6 +77,7 @@ public class UsuarioController {
         return usuario;
     }
 
+    @ApiOperation(value = "Pesquisar usuario")
     @GetMapping("/pesquisa")
     public List<Usuario> pesquisarUsuarioEntregador(
             @RequestParam(value = "pesquisa", defaultValue = "") String pesquisa,
