@@ -2,6 +2,7 @@ package com.eazylogg.backend.controllers;
 
 import com.eazylogg.backend.models.Entrega;
 import com.eazylogg.backend.services.EntregaService;
+import com.eazylogg.backend.services.PDFService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -23,6 +24,9 @@ public class EntregaController {
 
     @Autowired
     private EntregaService entregaService;
+
+    @Autowired
+    private PDFService pdfService;
 
     @ApiOperation(value = "Listar entregas")
     @GetMapping
@@ -71,7 +75,7 @@ public class EntregaController {
         String headerValue = "attachment; filename=pdf_" + currentDateTime + ".pdf";
         response.setHeader(headerKey, headerValue);
 
-        this.entregaService.getComprovantePdf(response, id);
+        this.pdfService.getComprovantePdf(response, id);
     }
 
 }

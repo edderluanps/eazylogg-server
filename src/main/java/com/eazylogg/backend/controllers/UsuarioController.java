@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -83,5 +84,16 @@ public class UsuarioController {
             @RequestParam(value = "pesquisa", defaultValue = "") String pesquisa,
             @RequestParam(value = "categoria", defaultValue = "") String categoria){
         return usuarioService.pesquisarUsuarioEntregador(pesquisa, categoria);
+    }
+
+    @ApiOperation(value = "Paginação de usuário")
+    @GetMapping("/page")
+    public Page<Usuario> usuarioPage(
+            @RequestParam(value = "categoria", defaultValue = "") String categoria,
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+            @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,
+            @RequestParam(value = "direction", defaultValue = "ASC") String direction){
+        return usuarioService.usuarioPage(categoria, page, linesPerPage, orderBy, direction);
     }
 }

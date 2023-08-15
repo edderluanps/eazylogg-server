@@ -14,6 +14,9 @@ import com.eazylogg.backend.services.exceptions.DataIntegrityException;
 import com.eazylogg.backend.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -112,5 +115,10 @@ public class UsuarioService {
 
     public List<Usuario> pesquisarUsuarioEntregador(String pesquisa, String categoria){
         return usuarioRepository.pesquisa(pesquisa, categoria);
+    }
+
+    public Page<Usuario> usuarioPage(String categoria, Integer page, Integer pageRows, String orderBy, String direction){
+        PageRequest pageRequest = PageRequest.of(page, pageRows, Sort.Direction.valueOf(direction), orderBy);
+        return usuarioRepository.findAll(categoria, pageRequest);
     }
 }

@@ -6,6 +6,9 @@ import com.eazylogg.backend.services.exceptions.DataIntegrityException;
 import com.eazylogg.backend.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,6 +49,11 @@ public class PacoteService {
 
     public List<Pacote> pesquisarPacote(String porte, String cep){
         return pacoteRepository.pesquisa(porte, cep);
+    }
+
+    public Page<Pacote> pacotePage(Integer page, Integer pageRows, String orderBy, String direction){
+        PageRequest pageRequest = PageRequest.of(page, pageRows, Sort.Direction.valueOf(direction), orderBy);
+        return pacoteRepository.findAll(pageRequest);
     }
 
 }
