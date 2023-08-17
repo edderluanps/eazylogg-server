@@ -69,7 +69,7 @@ public class PDFService {
         Paragraph paragraph8 = new Paragraph("Descontos: R$ " + entrega.getDesconto(), FontFactory.getFont(FontFactory.HELVETICA, 15, Color.BLACK));
         paragraph8.setAlignment(Paragraph.ALIGN_LEFT);
 
-        Paragraph paragraph9 = new Paragraph("Valor Total: R$ " + entrega.getValorTotal(), FontFactory.getFont(FontFactory.HELVETICA, 18, Color.BLACK));
+        Paragraph paragraph9 = new Paragraph("Valor Total: R$ " + entrega.getValorTotal(), FontFactory.getFont(FontFactory.HELVETICA_BOLD, 18, Color.BLACK));
         paragraph9.setAlignment(Paragraph.ALIGN_LEFT);
 
         document.add(new Paragraph(" "));
