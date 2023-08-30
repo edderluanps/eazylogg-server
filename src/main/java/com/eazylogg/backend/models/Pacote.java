@@ -24,6 +24,8 @@ public class Pacote implements Serializable {
     @EqualsAndHashCode.Include
     private Long id;
 
+    private String descricao;
+
     private String porte;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -48,6 +50,14 @@ public class Pacote implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public String getPorte() {

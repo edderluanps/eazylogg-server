@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/eazylogg/avaliacao/**",
             "/eazylogg/pacote/**",
             "/eazylogg/usuario/**",
+            "/eazylogg/usuario/entregadores/**",
             "/eazylogg/entrega/comprovante/**"
     };
 

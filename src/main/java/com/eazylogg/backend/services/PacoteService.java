@@ -47,13 +47,25 @@ public class PacoteService {
         }
     }
 
-    public List<Pacote> pesquisarPacote(String porte, String cep){
-        return pacoteRepository.pesquisa(porte, cep);
+    public List<Pacote> pesquisarPacote(String descricao){
+        return pacoteRepository.pesquisa(descricao);
+    }
+
+    public List<Pacote> buscarUltimosPacotes(){
+        return pacoteRepository.buscarUltimosPacotes();
+    }
+
+    public List<Pacote> filtrarPacote(String porte, String cep){
+        return pacoteRepository.filtragem(porte, cep);
     }
 
     public Page<Pacote> pacotePage(Integer page, Integer pageRows, String orderBy, String direction){
         PageRequest pageRequest = PageRequest.of(page, pageRows, Sort.Direction.valueOf(direction), orderBy);
         return pacoteRepository.findAll(pageRequest);
+    }
+
+    public List<Pacote> findBycontratanteId(Long id){
+        return pacoteRepository.findBycontratanteId(id);
     }
 
 }

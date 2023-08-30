@@ -18,7 +18,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Transactional(readOnly=true)
     @Query("SELECT u FROM Usuario u WHERE LOWER(u.categoria) =:categoria")
-    Page<Usuario> findAll(@Param("categoria") String categoria, Pageable pageRequest);
+    List<Usuario> getUsuariosEntregadores(@Param("categoria") String categoria);
+
+    @Transactional(readOnly=true)
+    @Query("SELECT u FROM Usuario u WHERE LOWER(u.categoria) =:categoria")
+    Page<Usuario> getUsuarios(@Param("categoria") String categoria, Pageable pageRequest);
 
     @Transactional(readOnly = true)
     @Query("SELECT u FROM Usuario u WHERE LOWER(u.nome) LIKE LOWER(concat('%', :pesquisa,'%')) AND u.categoria =:categoria")

@@ -117,8 +117,12 @@ public class UsuarioService {
         return usuarioRepository.pesquisa(pesquisa, categoria);
     }
 
+    public List<Usuario> getListaUsuarioEntragador(String categoria){
+        return usuarioRepository.getUsuariosEntregadores(categoria);
+    }
+
     public Page<Usuario> usuarioPage(String categoria, Integer page, Integer pageRows, String orderBy, String direction){
         PageRequest pageRequest = PageRequest.of(page, pageRows, Sort.Direction.valueOf(direction), orderBy);
-        return usuarioRepository.findAll(categoria, pageRequest);
+        return usuarioRepository.getUsuarios(categoria, pageRequest);
     }
 }

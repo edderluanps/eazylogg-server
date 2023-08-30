@@ -40,6 +40,12 @@ public class EntregaController {
         return entregaService.getEntrega(id);
     }
 
+    @ApiOperation(value = "Listar entregas por entregadores responsáveis")
+    @GetMapping("/entregas-realizadas")
+    public List<Entrega> findByEntregadorId(@RequestParam(value = "entId", defaultValue = "0") Long entId) {
+        return entregaService.findByEntregadorId(entId);
+    }
+
     @ApiOperation(value = "Cadastrar entrega")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

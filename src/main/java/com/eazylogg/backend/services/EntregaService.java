@@ -72,4 +72,8 @@ public class EntregaService {
         }
     }
 
+    public List<Entrega> findByEntregadorId(Long entId){
+        return entregaRepository.findByEntregadorId(entId);
+    }
+
 }

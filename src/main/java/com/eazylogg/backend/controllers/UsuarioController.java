@@ -71,8 +71,7 @@ public class UsuarioController {
     }
 
     @ApiOperation(value = "Buscar usuario por email")
-    @PutMapping("/email")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @GetMapping("/email")
     public Usuario find(@RequestParam(value = "value") String email) {
         Usuario usuario = usuarioService.findByEmail(email);
         return usuario;
@@ -84,6 +83,13 @@ public class UsuarioController {
             @RequestParam(value = "pesquisa", defaultValue = "") String pesquisa,
             @RequestParam(value = "categoria", defaultValue = "") String categoria){
         return usuarioService.pesquisarUsuarioEntregador(pesquisa, categoria);
+    }
+
+    @ApiOperation(value = "Listar usuarios entregadores")
+    @GetMapping("/entregadores")
+    public List<Usuario> listarUsuarioEntregador(
+            @RequestParam(value = "categoria", defaultValue = "") String categoria){
+        return usuarioService.getListaUsuarioEntragador( categoria);
     }
 
     @ApiOperation(value = "Paginação de usuário")

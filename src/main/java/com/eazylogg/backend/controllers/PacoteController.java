@@ -26,6 +26,18 @@ public class PacoteController {
         return pacoteService.getListaPacotes();
     }
 
+    @ApiOperation(value = "Listar ultimos pacotes")
+    @GetMapping("/ultimos-resultados")
+    public List<Pacote> buscarUltimosPacotes() {
+        return pacoteService.buscarUltimosPacotes();
+    }
+
+    @ApiOperation(value = "Listar pacotes por contratante")
+    @GetMapping("/pacotes-contratante")
+    public List<Pacote> findBycontratanteId(@RequestParam(value = "contId", defaultValue = "0") Long id) {
+        return pacoteService.findBycontratanteId(id);
+    }
+
     @ApiOperation(value = "Buscar pacote por id")
     @GetMapping("/{id}")
     public Pacote getById(@PathVariable Long id){
@@ -60,9 +72,16 @@ public class PacoteController {
     @ApiOperation(value = "Pesquisar pacote")
     @GetMapping("/pesquisa")
     public List<Pacote> pesquisarPacote(
+            @RequestParam(value = "descricao", defaultValue = "") String descricao){
+        return pacoteService.pesquisarPacote(descricao);
+    }
+
+    @ApiOperation(value = "Filtrar pacote")
+    @GetMapping("/filtrar")
+    public List<Pacote> filtrarPacote(
             @RequestParam(value = "porte", defaultValue = "") String porte,
             @RequestParam(value = "cep", defaultValue = "") String cep){
-        return pacoteService.pesquisarPacote(porte, cep);
+        return pacoteService.filtrarPacote(porte, cep);
     }
 
     @ApiOperation(value = "Paginação de pacotes")
