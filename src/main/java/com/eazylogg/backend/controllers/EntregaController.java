@@ -84,4 +84,10 @@ public class EntregaController {
         this.pdfService.getComprovantePdf(response, id);
     }
 
+    @ApiOperation(value = "Buscar entregas por código de rastreamento")
+    @GetMapping("/pesquisa-rastreamento")
+    public List<Entrega> pesquisarEntregaByCodRastreamento(@RequestParam(value = "codigo", defaultValue = "") String codigo) {
+        return entregaService.pesquisarEntregaByCodRastreamento(codigo);
+    }
+
 }

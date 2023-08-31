@@ -53,12 +53,14 @@ public class Entrega implements Serializable {
 
     private String obs;
 
+    private String codRastreamento;
+
     private boolean ativo;
 
     public Entrega(){
     }
 
-    public Entrega(Long id, Usuario entregadorId, Pacote pacoteId, LocalDate dataColeta, LocalDate dataEntrega, Endereco enderecoColetaId, Pagamento pagamento, EntregaStatus status, Double valor, Double desconto, String obs, boolean ativo) {
+    public Entrega(Long id, Usuario entregadorId, Pacote pacoteId, LocalDate dataColeta, LocalDate dataEntrega, Endereco enderecoColetaId, Pagamento pagamento, EntregaStatus status, Double valor, Double desconto, String obs, String codRastreamento, boolean ativo) {
         this.id = id;
         this.entregadorId = entregadorId;
         this.pacoteId = pacoteId;
@@ -70,6 +72,7 @@ public class Entrega implements Serializable {
         this.valor = valor;
         this.desconto = desconto;
         this.obs = obs;
+        this.codRastreamento = codRastreamento;
         this.ativo = ativo;
     }
 

@@ -14,4 +14,8 @@ public interface EntregaRepository extends JpaRepository<Entrega, Long> {
     @Query("SELECT e FROM Entrega e WHERE e.entregadorId.id =:entId")
     List<Entrega> findByEntregadorId(@Param("entId") Long entId);
 
+    @Transactional(readOnly = true)
+    @Query("SELECT e FROM Entrega e WHERE e.codRastreamento =:codigo")
+    List<Entrega> pesquisarEntregaByCodRastreamento(@Param("codigo") String codigo);
+
 }

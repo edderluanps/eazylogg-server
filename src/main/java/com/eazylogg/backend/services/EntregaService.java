@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -53,6 +54,8 @@ public class EntregaService {
 
         pagamentoRepository.save(entrega.getPagamento());
         //emailService.sendConfirmationEmail(entrega);
+        String codRastreamento = gerarCodigoRastreamento();
+        entrega.setCodRastreamento(codRastreamento + "-" + entrega.getPacoteId().getId());
         return entregaRepository.save(entrega);
     }
 
@@ -74,6 +77,23 @@ public class EntregaService {
 
     public List<Entrega> findByEntregadorId(Long entId){
         return entregaRepository.findByEntregadorId(entId);
+    }
+
+    public List<Entrega> pesquisarEntregaByCodRastreamento(String codigo){
+        return entregaRepository.pesquisarEntregaByCodRastreamento(codigo);
+    }
+
+
+    public static String gerarCodigoRastreamento() {
+        String caracteres = "abcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder codigo = new StringBuilder(8);
+        SecureRandom random = new SecureRandom();
+
+        for (int i = 0; i < 8; i++) {
+            int indice = random.nextInt(caracteres.length());
+            codigo.append(caracteres.charAt(indice));
+        }
+        return codigo.toString();
     }
 
 }
