@@ -18,6 +18,8 @@ public class UsuarioDTO implements Serializable {
     @NotEmpty(message = "Campo obrigatório")
     private String nome;
 
+    private String descricao;
+
     @NotEmpty(message = "Campo obrigatório")
     @Email(message = "Email inválido")
     @Column(unique=true)
@@ -31,6 +33,7 @@ public class UsuarioDTO implements Serializable {
     public UsuarioDTO(Usuario usuario) {
         id = usuario.getId();
         nome = usuario.getNome();
+        descricao = usuario.getDescricao();
         email = usuario.getEmail();
         categoria = usuario.getCategoria();
     }

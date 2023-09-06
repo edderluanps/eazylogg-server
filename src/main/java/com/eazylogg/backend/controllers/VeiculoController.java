@@ -31,6 +31,12 @@ public class VeiculoController {
         return veiculoService.getVeiculo(id);
     }
 
+    @ApiOperation(value = "Buscar veículo por id")
+    @GetMapping("/veiculo-usuario/{id}")
+    public List<Veiculo> getVeiculoByUserId(@PathVariable Long id) {
+        return veiculoService.getVeiculoByUserId(id);
+    }
+
     @ApiOperation(value = "Cadastrar veículo")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

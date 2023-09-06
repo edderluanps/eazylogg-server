@@ -21,6 +21,9 @@ public class UsuarioNewDTO implements Serializable {
     @Length(min = 5, max = 100, message = "Campo deve conter de 5 à 100 caracteres")
     private String nome;
 
+    @Length(min = 5, max = 500, message = "Campo deve conter de 5 à 500 caracteres")
+    private String descricao;
+
     @NotEmpty(message = "Preenchimento obrigatório")
     @Email(message = "Email inválido")
     @Column(unique = true)

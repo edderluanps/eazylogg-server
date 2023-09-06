@@ -26,6 +26,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Transactional(readOnly = true)
     @Query("SELECT u FROM Usuario u WHERE LOWER(u.nome) LIKE LOWER(concat('%', :pesquisa,'%')) AND u.categoria =:categoria")
-    List<Usuario> pesquisa (@Param("pesquisa") String pesquisa, @Param("categoria") String categoria);
+    List<Usuario> pesquisa(@Param("pesquisa") String pesquisa, @Param("categoria") String categoria);
 
 }

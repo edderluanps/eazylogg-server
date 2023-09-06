@@ -24,6 +24,11 @@ public class VeiculoService {
         return veiculoRepository.findAll();
     }
 
+    public List<Veiculo> getVeiculoByUserId(Long id){
+        return veiculoRepository.getVeiculoByUserId(id);
+    }
+
+
     public Veiculo salvarVeiculo(Veiculo veiculo){
         return veiculoRepository.save(veiculo);
     }

@@ -30,6 +30,8 @@ public class Usuario implements Serializable {
 
     private String nome;
 
+    private String descricao;
+
     private String cpfOuCnpj;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
@@ -75,10 +77,11 @@ public class Usuario implements Serializable {
         addPerfis(TipoPerfil.CLIENTE);
     }
 
-    public Usuario(Long id, String nome, String cpfOuCnpj, LocalDate dataNascimento, LocalDate dataCadastro, TipoCliente tipoCliente, String categoria, String email, String senha, boolean ativo) {
+    public Usuario(Long id, String nome, String descricao, String cpfOuCnpj, LocalDate dataNascimento, LocalDate dataCadastro, TipoCliente tipoCliente, String categoria, String email, String senha, boolean ativo) {
         this.id = id;
         addPerfis(TipoPerfil.CLIENTE);
         this.nome = nome;
+        this.descricao = descricao;
         this.cpfOuCnpj = cpfOuCnpj;
         this.dataNascimento = dataNascimento;
         this.dataCadastro = dataCadastro;

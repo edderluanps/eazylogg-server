@@ -44,6 +44,12 @@ public class UsuarioService {
         return usuarioRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado!"));
     }
 
+    public UsuarioDTO getUsuarioDTO(Long id){
+        Usuario user = usuarioRepository.getById(id);
+        UsuarioDTO userDto = new UsuarioDTO(user);
+        return userDto;
+    }
+
     public List<Usuario> getListaUsuarios(){
         return usuarioRepository.findAll();
     }
@@ -70,14 +76,14 @@ public class UsuarioService {
 
     public Usuario fromDTO(UsuarioDTO usuarioDTO) {
         return new Usuario(usuarioDTO.getId(), usuarioDTO.getNome(), usuarioDTO.getEmail(),
-                null, null, null, null, null, null, true);
+                null, null, null, null, null, null, null, true);
     }
 
     public Usuario fromDTO(UsuarioNewDTO usuarioDTO) {
 
         LocalDate dataAtual = LocalDate.now();
 
-        Usuario usuario = new Usuario(null  , usuarioDTO.getNome(), usuarioDTO.getCpfOuCnpj(),
+        Usuario usuario = new Usuario(null  , usuarioDTO.getNome(), usuarioDTO.getDescricao(), usuarioDTO.getCpfOuCnpj(),
                 usuarioDTO.getDataNascimento(), dataAtual, TipoCliente.toEnum(usuarioDTO.getTipoCliente()), usuarioDTO.getCategoria(), usuarioDTO.getEmail(), bpe.encode(usuarioDTO.getSenha()), true);
 
         Endereco endereco = new Endereco(null, usuarioDTO.getLogradouro(), usuarioDTO.getNumero(), usuarioDTO.getCep(),usuarioDTO.getComplemento(), usuarioDTO.getBairro(),

@@ -40,6 +40,12 @@ public class UsuarioController {
         return usuarioService.getUsuario(id);
     }
 
+    @ApiOperation(value = "Buscar Entregador por id")
+    @GetMapping("/entregador/{id}")
+    public UsuarioDTO getusUarioById(@PathVariable Long id) {
+        return usuarioService.getUsuarioDTO(id);
+    }
+
     @ApiOperation(value = "Cadastrar usuario")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
