@@ -108,6 +108,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>eazylogg-server</finalName>
 	</build>
 
 </project>

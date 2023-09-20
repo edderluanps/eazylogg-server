@@ -115,4 +115,5 @@ public class Usuario implements Serializable {
     public void setEndereco(List<Endereco> endereco) {
         this.endereco = endereco;
     }
+
 }

@@ -1,6 +1,7 @@
 package com.eazylogg.backend.services;
 
 import com.eazylogg.backend.models.Pacote;
+import com.eazylogg.backend.models.Usuario;
 import com.eazylogg.backend.repositories.PacoteRepository;
 import com.eazylogg.backend.services.exceptions.DataIntegrityException;
 import com.eazylogg.backend.services.exceptions.ObjectNotFoundException;
