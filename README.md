@@ -1,8 +1,9 @@
-# eazylogg-server
-Server Side do projeto EazyLogg
+<h1 align="center" id="title">Backend do projeto EazyLogg</h1>
+
+<p id="description">Backend de uma plataforma de coleta e entregas de encomendas desenvolvido com Java, Springboot e Postgres.</p>
 
 ## O projeto
-O Eazylogg é um projeto criado para portfólio.
+O Eazylogg é um projeto criado para portfólio, visando estudo e prática de ferramentas de desenvolvimento.
 
 
 ## Publico
@@ -65,9 +66,12 @@ O serviço é dividido em:
  * Instalação do PG Admin <a href="https://www.youtube.com/watch?v=L_2l8XTCPAE&t=624s">aqui</a>. Créditos ao autor;
  * Instalação do DBeaver <a href="https://www.youtube.com/watch?v=i0gY3HePe-k">aqui</a>. Créditos ao autor;
 
+
 ### Documentação
- * Acrescente "/swagger-ui/index.html#/" sem as aspas na URL do servidor onde o projeto estiver rodando.
+ * Basta acrescentar o "/swagger-ui/index.html#/" sem aspas, na URL do servidor do projeto, para ter acesso ao painel do Swagger.
+   
    Ex:
+
    ````
    localhost:8080/swagger-ui/index.html#/
    ````
