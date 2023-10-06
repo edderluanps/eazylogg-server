@@ -46,11 +46,6 @@ O serviço é dividido em:
   * H2 Database
   * PostgreSQL
 
-### Deploy
-  
-  * Backend: [...]
-  * DB: [...]
-
 
 ## Instalação Passo a passo
 
@@ -69,6 +64,13 @@ O serviço é dividido em:
  * É preciso ter o Postgres e um gerenciador do banco instalado na máquina, seja o PG Admin ou DBeaver;
  * Instalação do PG Admin <a href="https://www.youtube.com/watch?v=L_2l8XTCPAE&t=624s">aqui</a>. Créditos ao autor;
  * Instalação do DBeaver <a href="https://www.youtube.com/watch?v=i0gY3HePe-k">aqui</a>. Créditos ao autor;
+
+### Documentação
+ * Acrescente "/swagger-ui/index.html#/" sem as aspas na URL do servidor onde o projeto estiver rodando.
+   Ex:
+   ````
+   localhost:8080/swagger-ui/index.html#/
+   ````
 
 
  ## Licença
