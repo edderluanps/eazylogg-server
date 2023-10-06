@@ -23,28 +23,28 @@ public class PagamentoController {
     @ApiOperation(value = "Listar pagamentos")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
-    public List<Pagamento> getAll() {
-        return pagamentoService.getListaPagamentos();
+    public List<Pagamento> listarPagamentos() {
+        return pagamentoService.listarPagamentos();
     }
 
     @ApiOperation(value = "Buscar pagamento por id")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
-    public Pagamento getById(Long id){
-        return pagamentoService.getPagamento(id);
+    public Pagamento buscarPagamentoPorId(Long id){
+        return pagamentoService.buscarPagamentoPorId(id);
     }
 
     @ApiOperation(value = "Cadastrar pagamento")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Pagamento salvar(@RequestBody @Validated Pagamento pagamento){
+    public Pagamento salvarPagamento(@RequestBody @Validated Pagamento pagamento){
         return pagamentoService.salvarPagamento(pagamento);
     }
 
     @ApiOperation(value = "Atualizar pagamento")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizar(@PathVariable Long id, @RequestBody Pagamento pagamento){
+    public void atualizarPagamento(@PathVariable Long id, @RequestBody Pagamento pagamento){
         pagamentoService.atualizarPagamento(id, pagamento);
     }
 
@@ -55,7 +55,7 @@ public class PagamentoController {
     })    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletar(@PathVariable Long id){
-        pagamentoService.deletarVeiculo(id);
+    public void deletarPagamento(@PathVariable Long id){
+        pagamentoService.deletarPagamento(id);
     }
 }

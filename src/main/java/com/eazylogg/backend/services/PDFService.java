@@ -20,9 +20,9 @@ public class PDFService {
     @Autowired
     private EntregaService entregaService;
 
-    public void getComprovantePdf(HttpServletResponse response, Long id) throws IOException {
+    public void gerarComprovantePdf(HttpServletResponse response, Long id) throws IOException {
 
-        Entrega entrega  = entregaService.getEntrega(id);
+        Entrega entrega  = entregaService.buscarEntregaPorId(id);
 
         Document document = new Document(PageSize.A4);
         PdfWriter.getInstance(document, response.getOutputStream());

@@ -16,11 +16,11 @@ public class PagamentoService {
     @Autowired
     private PagamentoRepository pagamentoRepository;
 
-    public Pagamento getPagamento(Long id){
+    public Pagamento buscarPagamentoPorId(Long id){
         return pagamentoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Pagamento não encontrado!"));
     }
 
-    public List<Pagamento> getListaPagamentos(){
+    public List<Pagamento> listarPagamentos(){
         return pagamentoRepository.findAll();
     }
 
@@ -28,15 +28,17 @@ public class PagamentoService {
         return pagamentoRepository.save(pagamento);
     }
 
-    public void atualizarPagamento(Long id, Pagamento pagamento){
-        pagamentoRepository.findById(id).map(obj -> {
-            pagamento.setId(obj.getId());
+    public Pagamento atualizarPagamento(Long id, Pagamento pagamento){
+        pagamento = buscarPagamentoPorId(id);
+        if (pagamento != null){
             return pagamentoRepository.save(pagamento);
-        }).orElseThrow(() -> new ObjectNotFoundException("Pagamento não encontrado!"));
+        }else{
+            throw new ObjectNotFoundException("Pagamento não encontrado!");
+        }
     }
 
-    public void deletarVeiculo(Long id) {
-        getPagamento(id);
+    public void deletarPagamento(Long id) {
+        buscarPagamentoPorId(id);
         try{
             pagamentoRepository.deleteById(id);
         }catch(DataIntegrityViolationException ex){

@@ -1,6 +1,5 @@
 package com.eazylogg.backend.repositories;
 
-import com.eazylogg.backend.models.Pacote;
 import com.eazylogg.backend.models.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,14 +17,14 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Transactional(readOnly=true)
     @Query("SELECT u FROM Usuario u WHERE LOWER(u.categoria) =:categoria")
-    List<Usuario> getUsuariosEntregadores(@Param("categoria") String categoria);
+    List<Usuario> listarUsuariosEntregadores(@Param("categoria") String categoria);
 
     @Transactional(readOnly=true)
     @Query("SELECT u FROM Usuario u WHERE LOWER(u.categoria) =:categoria")
-    Page<Usuario> getUsuarios(@Param("categoria") String categoria, Pageable pageRequest);
+    Page<Usuario> filtrarUsuariosPorCategoria(@Param("categoria") String categoria, Pageable pageRequest);
 
     @Transactional(readOnly = true)
     @Query("SELECT u FROM Usuario u WHERE LOWER(u.nome) LIKE LOWER(concat('%', :pesquisa,'%')) AND u.categoria =:categoria")
-    List<Usuario> pesquisa(@Param("pesquisa") String pesquisa, @Param("categoria") String categoria);
+    List<Usuario> pesquisar(@Param("pesquisa") String pesquisa, @Param("categoria") String categoria);
 
 }

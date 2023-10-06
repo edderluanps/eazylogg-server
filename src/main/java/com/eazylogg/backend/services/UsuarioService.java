@@ -36,7 +36,7 @@ public class UsuarioService {
     @Autowired
     private AvaliacaoRepository avaliacaoRepository;
 
-    public Usuario getUsuario(Long id){
+    public Usuario buscarUsuarioPorId(Long id){
         UserSS user = UserService.authenticated();
         if (user == null || !user.hasRole(TipoPerfil.ADMIN) && !id.equals(user.getId())) {
             throw new AuthorizationException("Acesso negado");
@@ -44,13 +44,13 @@ public class UsuarioService {
         return usuarioRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Usuário não encontrado!"));
     }
 
-    public UsuarioDTO getUsuarioDTO(Long id){
+    public UsuarioDTO usuarioToDto(Long id){
         Usuario user = usuarioRepository.getById(id);
         UsuarioDTO userDto = new UsuarioDTO(user);
         return userDto;
     }
 
-    public List<Usuario> getListaUsuarios(){
+    public List<Usuario> listarUsuarios(){
         return usuarioRepository.findAll();
     }
 
@@ -60,13 +60,13 @@ public class UsuarioService {
     }
 
     public Usuario atualizarUsuario(Usuario usuario) {
-        Usuario novoUsuario = getUsuario(usuario.getId());
-        UpdateUsuario(novoUsuario, usuario);
+        Usuario novoUsuario = buscarUsuarioPorId(usuario.getId());
+        atualizarNovoUsuario(novoUsuario, usuario);
         return usuarioRepository.save(novoUsuario);
     }
 
     public void deletarUsuario(Long id) {
-        getUsuario(id);
+        buscarUsuarioPorId(id);
         try{
             usuarioRepository.deleteById(id);
         }catch(DataIntegrityViolationException ex){
@@ -101,12 +101,12 @@ public class UsuarioService {
         return usuario;
     }
 
-    private void UpdateUsuario(Usuario usuarioNovo, Usuario usuario) {
+    private void atualizarNovoUsuario(Usuario usuarioNovo, Usuario usuario) {
         usuarioNovo.setNome(usuario.getNome());
         usuarioNovo.setEmail(usuario.getEmail());
     }
 
-    public Usuario findByEmail(String email) {
+    public Usuario buscarUsuarioPorEmail(String email) {
         UserSS user = UserService.authenticated();
         if (user == null || !user.hasRole(TipoPerfil.ADMIN) && !email.equals(user.getUsername())) {
             throw new AuthorizationException("Acesso negado");
@@ -120,15 +120,15 @@ public class UsuarioService {
     }
 
     public List<Usuario> pesquisarUsuarioEntregador(String pesquisa, String categoria){
-        return usuarioRepository.pesquisa(pesquisa, categoria);
+        return usuarioRepository.pesquisar(pesquisa, categoria);
     }
 
-    public List<Usuario> getListaUsuarioEntragador(String categoria){
-        return usuarioRepository.getUsuariosEntregadores(categoria);
+    public List<Usuario> listaUsuarioEntragador(String categoria){
+        return usuarioRepository.listarUsuariosEntregadores(categoria);
     }
 
     public Page<Usuario> usuarioPage(String categoria, Integer page, Integer pageRows, String orderBy, String direction){
         PageRequest pageRequest = PageRequest.of(page, pageRows, Sort.Direction.valueOf(direction), orderBy);
-        return usuarioRepository.getUsuarios(categoria, pageRequest);
+        return usuarioRepository.filtrarUsuariosPorCategoria(categoria, pageRequest);
     }
 }

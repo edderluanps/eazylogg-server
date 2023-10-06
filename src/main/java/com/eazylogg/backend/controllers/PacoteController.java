@@ -22,8 +22,8 @@ public class PacoteController {
 
     @ApiOperation(value = "Listar pacotes")
     @GetMapping
-    public List<Pacote> getAll() {
-        return pacoteService.getListaPacotes();
+    public List<Pacote> listarPacotes() {
+        return pacoteService.listarPacotes();
     }
 
     @ApiOperation(value = "Listar ultimos pacotes")
@@ -34,28 +34,28 @@ public class PacoteController {
 
     @ApiOperation(value = "Listar pacotes por contratante")
     @GetMapping("/pacotes-contratante")
-    public List<Pacote> findBycontratanteId(@RequestParam(value = "contId", defaultValue = "0") Long id) {
-        return pacoteService.findBycontratanteId(id);
+    public List<Pacote> buscarPacotePorContratanteId(@RequestParam(value = "contId", defaultValue = "0") Long id) {
+        return pacoteService.buscarPacotePorContratanteId(id);
     }
 
     @ApiOperation(value = "Buscar pacote por id")
     @GetMapping("/{id}")
-    public Pacote getById(@PathVariable Long id){
-        return pacoteService.getPacote(id);
+    public Pacote buscarPacotePorId(@PathVariable Long id){
+        return pacoteService.buscarPacotePorId(id);
     }
 
     @ApiOperation(value = "Cadastrar pacote")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Pacote salvar(@RequestBody @Validated Pacote pacote){
+    public Pacote salvarPacote(@RequestBody @Validated Pacote pacote){
         return pacoteService.salvarPacote(pacote);
     }
 
     @ApiOperation(value = "Atualizar pacote")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizar(@PathVariable Long id, @RequestBody Pacote pacote){
-        pacoteService.atualizarPacote(id, pacote);
+    public Pacote atualizarPacote(@PathVariable Long id, @RequestBody Pacote pacote){
+        return pacoteService.atualizarPacote(id, pacote);
     }
 
     @ApiOperation(value = "Deletar pacote")
@@ -65,7 +65,7 @@ public class PacoteController {
     })
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletar(@PathVariable Long id){
+    public void deletarPacote(@PathVariable Long id){
         pacoteService.deletarPacote(id);
     }
 
@@ -86,7 +86,7 @@ public class PacoteController {
 
     @ApiOperation(value = "Paginação de pacotes")
     @GetMapping("/page")
-    public Page<Pacote> usuariosPage(
+    public Page<Pacote> pacotePage(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
             @RequestParam(value = "orderBy", defaultValue = "id") String orderBy,

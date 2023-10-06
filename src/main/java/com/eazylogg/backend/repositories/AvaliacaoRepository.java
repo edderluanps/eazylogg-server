@@ -8,5 +8,5 @@ import org.springframework.data.repository.query.Param;
 public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Long> {
 
     @Query("SELECT AVG(a.nota) FROM Avaliacao a WHERE a.usuario.id = :idUsuario")
-    Double findAvgUser(@Param("idUsuario") Long id);
+    Double buscarMediaAvaliacao(@Param("idUsuario") Long id);
 }

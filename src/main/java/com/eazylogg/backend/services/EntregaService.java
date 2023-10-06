@@ -1,9 +1,9 @@
 package com.eazylogg.backend.services;
 
-import com.eazylogg.backend.models.Entrega;
-import com.eazylogg.backend.models.Pacote;
+import com.eazylogg.backend.models.*;
 import com.eazylogg.backend.models.enums.EntregaStatus;
 import com.eazylogg.backend.models.enums.PagamentoStatus;
+import com.eazylogg.backend.repositories.EnderecoRepository;
 import com.eazylogg.backend.repositories.EntregaRepository;
 import com.eazylogg.backend.repositories.PacoteRepository;
 import com.eazylogg.backend.repositories.PagamentoRepository;
@@ -27,16 +27,16 @@ public class EntregaService {
     private PacoteRepository pacoteRepository;
 
     @Autowired
-    private PagamentoRepository pagamentoRepository;
+    private EnderecoRepository enderecoRepository;
 
     @Autowired
-    private EmailService emailService;
+    private PagamentoRepository pagamentoRepository;
 
-    public Entrega getEntrega(Long id){
-        return entregaRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Entrega não encontrado!"));
+    public Entrega buscarEntregaPorId(Long id){
+        return entregaRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Entrega não encontrada!"));
     }
 
-    public List<Entrega> getListaEntregas(){
+    public List<Entrega> listarEntregas(){
         return entregaRepository.findAll();
     }
 
@@ -47,27 +47,24 @@ public class EntregaService {
         entrega.setDataEntrega(dataAtual);
         entrega.setStatus(EntregaStatus.SOLICITADO);
         entrega.getPagamento().setStatus(PagamentoStatus.PENDENTE);
-        entrega.getPagamento().setEntrega(entrega);
-
-        Pacote pacote = pacoteRepository.findById(entrega.getPacoteId().getId()).get();
-        entrega.setValor(pacote.getValor());
 
         pagamentoRepository.save(entrega.getPagamento());
-        //emailService.sendConfirmationEmail(entrega);
         String codRastreamento = gerarCodigoRastreamento();
         entrega.setCodRastreamento(codRastreamento + "-" + entrega.getPacoteId().getId());
         return entregaRepository.save(entrega);
     }
 
-    public void atualizarEntrega(Long id, Entrega entrega){
-        entregaRepository.findById(id).map(obj -> {
-            entrega.setId(obj.getId());
+    public Entrega atualizarEntrega(Long id, Entrega entrega){
+        entrega = buscarEntregaPorId(id);
+        if (entrega != null){
             return entregaRepository.save(entrega);
-        }).orElseThrow(() -> new ObjectNotFoundException("Entrega não encontrado!"));
+        }else{
+            throw new ObjectNotFoundException("Entrega não encontrada!");
+        }
     }
 
     public void deletarEntrega(Long id) {
-        getEntrega(id);
+        buscarEntregaPorId(id);
         try{
             entregaRepository.deleteById(id);
         }catch(DataIntegrityViolationException ex){
@@ -75,11 +72,11 @@ public class EntregaService {
         }
     }
 
-    public List<Entrega> findByEntregadorId(Long entId){
-        return entregaRepository.findByEntregadorId(entId);
+    public List<Entrega> buscarEntregaPorEntregadorId(Long entId){
+        return entregaRepository.buscarEntregaPorEntregadorId(entId);
     }
 
-    public List<Entrega> pesquisarEntregaByCodRastreamento(String codigo){
+    public List<Entrega> pesquisarEntregaPorCodRastreamento(String codigo){
         return entregaRepository.pesquisarEntregaByCodRastreamento(codigo);
     }
 

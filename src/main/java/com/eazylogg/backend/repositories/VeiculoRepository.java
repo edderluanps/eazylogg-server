@@ -11,6 +11,6 @@ public interface VeiculoRepository extends JpaRepository<Veiculo, Long> {
 
     @Transactional(readOnly=true)
     @Query("SELECT v FROM Veiculo v WHERE v.usuario.id =:id")
-    List<Veiculo> getVeiculoByUserId(Long id);
+    List<Veiculo> buscarVeiculoPorUsuarioId(Long id);
 
 }

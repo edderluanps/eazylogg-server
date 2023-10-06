@@ -30,34 +30,34 @@ public class EntregaController {
 
     @ApiOperation(value = "Listar entregas")
     @GetMapping
-    public List<Entrega> getAll() {
-        return entregaService.getListaEntregas();
+    public List<Entrega> listarEntregas() {
+        return entregaService.listarEntregas();
     }
 
     @ApiOperation(value = "Buscar entrega por id")
     @GetMapping("/{id}")
-    public Entrega getById(@PathVariable Long id) {
-        return entregaService.getEntrega(id);
+    public Entrega buscarEntregaPorId(@PathVariable Long id) {
+        return entregaService.buscarEntregaPorId(id);
     }
 
     @ApiOperation(value = "Listar entregas por entregadores responsáveis")
     @GetMapping("/entregas-realizadas")
-    public List<Entrega> findByEntregadorId(@RequestParam(value = "entId", defaultValue = "0") Long entId) {
-        return entregaService.findByEntregadorId(entId);
+    public List<Entrega> buscarEntregaPorEntregadorId(@RequestParam(value = "entId", defaultValue = "0") Long entId) {
+        return entregaService.buscarEntregaPorEntregadorId(entId);
     }
 
     @ApiOperation(value = "Cadastrar entrega")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Entrega salvar(@RequestBody @Validated Entrega entrega){
+    public Entrega salvarEntrega(@RequestBody @Validated Entrega entrega){
         return entregaService.salvarEntrega(entrega);
     }
 
     @ApiOperation(value = "Atualizar entrega")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizar(@PathVariable Long id, @RequestBody Entrega entrega){
-        entregaService.atualizarEntrega(id, entrega);
+    public Entrega atualizarEntrega(@PathVariable Long id, @RequestBody Entrega entrega){
+        return entregaService.atualizarEntrega(id, entrega);
     }
 
     @ApiOperation(value = "Deletar entrega")
@@ -66,13 +66,13 @@ public class EntregaController {
             @ApiResponse(code = 400, message = "Entrega inexistente.")
     })    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id){
+    public void deletarEntrega(@PathVariable Long id){
         entregaService.deletarEntrega(id);
     }
 
     @ApiOperation(value = "Imprimir comprovante de entrega")
     @GetMapping("/comprovante/{id}")
-    public void getComprovantePdf(@PathVariable Long id, HttpServletResponse response) throws IOException {
+    public void gerarComprovantePdf(@PathVariable Long id, HttpServletResponse response) throws IOException {
         response.setContentType("application/pdf");
         DateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyy - hh:mm:ss");
         String currentDateTime = dateFormatter.format(new Date());
@@ -81,13 +81,13 @@ public class EntregaController {
         String headerValue = "attachment; filename=pdf_" + currentDateTime + ".pdf";
         response.setHeader(headerKey, headerValue);
 
-        this.pdfService.getComprovantePdf(response, id);
+        this.pdfService.gerarComprovantePdf(response, id);
     }
 
     @ApiOperation(value = "Buscar entregas por código de rastreamento")
     @GetMapping("/pesquisa-rastreamento")
     public List<Entrega> pesquisarEntregaByCodRastreamento(@RequestParam(value = "codigo", defaultValue = "") String codigo) {
-        return entregaService.pesquisarEntregaByCodRastreamento(codigo);
+        return entregaService.pesquisarEntregaPorCodRastreamento(codigo);
     }
 
 }

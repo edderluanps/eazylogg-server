@@ -17,7 +17,7 @@ public interface PacoteRepository extends JpaRepository<Pacote, Long> {
 
     @Transactional(readOnly = true)
     @Query("SELECT p FROM Pacote p WHERE p.descricao LIKE LOWER(concat('%',:descricao,'%'))")
-    List<Pacote> pesquisa(@Param("descricao") String descricao);
+    List<Pacote> pesquisar(@Param("descricao") String descricao);
 
     @Transactional(readOnly = true)
     @Query("SELECT p FROM Pacote p WHERE p.porte =:porte AND p.cepDestinatario =:cep")
@@ -29,6 +29,6 @@ public interface PacoteRepository extends JpaRepository<Pacote, Long> {
 
     @Transactional(readOnly = true)
     @Query("SELECT p FROM Pacote p WHERE p.contratanteId.id =:contId")
-    List<Pacote> findBycontratanteId(@Param("contId") Long id);
+    List<Pacote> buscarPacotePorcontratanteId(@Param("contId") Long id);
 
 }

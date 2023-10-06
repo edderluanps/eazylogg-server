@@ -22,22 +22,22 @@ public class EnderecoController {
 
     @ApiOperation(value = "Listar endereços")
     @GetMapping
-    public List<Endereco> getAll() {
-        return enderecoService.getListaEnderecos();
+    public List<Endereco> listarEnderecos() {
+        return enderecoService.listarEnderecos();
     }
 
     @ApiOperation(value = "Buscar endereço por id")
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
-    public Endereco getById(@PathVariable Long id) {
-        return enderecoService.getEndereco(id);
+    public Endereco buscarEnderecoPorId(@PathVariable Long id) {
+        return enderecoService.buscarEnderecoPorId(id);
     }
 
     @ApiOperation(value = "Cadastrar endereço")
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Endereco salvar(@RequestBody @Validated Endereco endereco){
+    public Endereco salvarEndereco(@RequestBody @Validated Endereco endereco){
         return enderecoService.salvarEndereco(endereco);
     }
 
@@ -45,7 +45,7 @@ public class EnderecoController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizar(@PathVariable Long id, @RequestBody Endereco endereco){
+    public void atualizarEndereco(@PathVariable Long id, @RequestBody Endereco endereco){
         enderecoService.atualizarEndereco(id, endereco);
     }
 
@@ -57,7 +57,7 @@ public class EnderecoController {
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id){
+    public void deletarEndereco(@PathVariable Long id){
         enderecoService.deletarEndereco(id);
     }
 }

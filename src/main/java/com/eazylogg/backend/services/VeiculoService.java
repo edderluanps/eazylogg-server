@@ -16,16 +16,16 @@ public class VeiculoService {
     @Autowired
     private VeiculoRepository veiculoRepository;
 
-    public Veiculo getVeiculo(Long id){
+    public Veiculo buscarVeiculoPorId(Long id){
         return veiculoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Veículo não encontrado!"));
     }
 
-    public List<Veiculo> getListaVeiculos(){
+    public List<Veiculo> listarVeiculos(){
         return veiculoRepository.findAll();
     }
 
-    public List<Veiculo> getVeiculoByUserId(Long id){
-        return veiculoRepository.getVeiculoByUserId(id);
+    public List<Veiculo> buscarVeiculoPorUsuarioId(Long id){
+        return veiculoRepository.buscarVeiculoPorUsuarioId(id);
     }
 
 
@@ -33,15 +33,17 @@ public class VeiculoService {
         return veiculoRepository.save(veiculo);
     }
 
-    public void atualizarVeiculo(Long id, Veiculo veiculo) {
-        veiculoRepository.findById(id).map(obj -> {
-            veiculo.setId(obj.getId());
+    public Veiculo atualizarVeiculo(Long id, Veiculo veiculo) {
+        veiculo = buscarVeiculoPorId(id);
+        if (veiculo == null){
             return veiculoRepository.save(veiculo);
-        }).orElseThrow(() -> new ObjectNotFoundException("Veículo não encontrado!"));
+        }else{
+            throw new ObjectNotFoundException("Veículo não encontrado!");
+        }
     }
 
     public void deletarVeiculo(Long id) {
-        getVeiculo(id);
+        buscarVeiculoPorId(id);
         try{
             veiculoRepository.deleteById(id);
         }catch(DataIntegrityViolationException ex){

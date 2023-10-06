@@ -21,34 +21,34 @@ public class VeiculoController {
 
     @ApiOperation(value = "Listar veículos")
     @GetMapping
-    public List<Veiculo> getAll() {
-        return veiculoService.getListaVeiculos();
+    public List<Veiculo> listarVeiculos() {
+        return veiculoService.listarVeiculos();
     }
 
     @ApiOperation(value = "Buscar veículo por id")
     @GetMapping("/{id}")
-    public Veiculo getById(@PathVariable Long id) {
-        return veiculoService.getVeiculo(id);
+    public Veiculo buscarVeiculoPorId(@PathVariable Long id) {
+        return veiculoService.buscarVeiculoPorId(id);
     }
 
     @ApiOperation(value = "Buscar veículo por id")
     @GetMapping("/veiculo-usuario/{id}")
-    public List<Veiculo> getVeiculoByUserId(@PathVariable Long id) {
-        return veiculoService.getVeiculoByUserId(id);
+    public List<Veiculo> buscarVeiculoPorUsuarioId(@PathVariable Long id) {
+        return veiculoService.buscarVeiculoPorUsuarioId(id);
     }
 
     @ApiOperation(value = "Cadastrar veículo")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Veiculo salvar(@RequestBody @Validated Veiculo veiculo){
+    public Veiculo salvarVeiculo(@RequestBody @Validated Veiculo veiculo){
         return veiculoService.salvarVeiculo(veiculo);
     }
 
     @ApiOperation(value = "Atualizar veículo")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizar(@PathVariable Long id, @RequestBody Veiculo veiculo){
-        veiculoService.atualizarVeiculo(id, veiculo);
+    public Veiculo atualizarVeiculo(@PathVariable Long id, @RequestBody Veiculo veiculo){
+        return veiculoService.atualizarVeiculo(id, veiculo);
     }
 
     @ApiOperation(value = "Deletar veículo")
@@ -57,7 +57,7 @@ public class VeiculoController {
             @ApiResponse(code = 400, message = "Veículo inexistente.")
     })    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id){
+    public void deletarVeiculo(@PathVariable Long id){
         veiculoService.deletarVeiculo(id);
     }
 }

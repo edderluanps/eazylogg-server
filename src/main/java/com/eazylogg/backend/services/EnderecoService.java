@@ -16,11 +16,11 @@ public class EnderecoService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    public Endereco getEndereco(Long id){
+    public Endereco buscarEnderecoPorId(Long id){
         return enderecoRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Endereco não encontrado!"));
     }
 
-    public List<Endereco> getListaEnderecos(){
+    public List<Endereco> listarEnderecos(){
         return enderecoRepository.findAll();
     }
 
@@ -36,7 +36,7 @@ public class EnderecoService {
     }
 
     public void deletarEndereco(Long id) {
-        getEndereco(id);
+        buscarEnderecoPorId(id);
         try{
             enderecoRepository.deleteById(id);
         }catch(DataIntegrityViolationException ex){

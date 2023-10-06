@@ -1,7 +1,6 @@
 package com.eazylogg.backend.services;
 
 import com.eazylogg.backend.models.Pacote;
-import com.eazylogg.backend.models.Usuario;
 import com.eazylogg.backend.repositories.PacoteRepository;
 import com.eazylogg.backend.services.exceptions.DataIntegrityException;
 import com.eazylogg.backend.services.exceptions.ObjectNotFoundException;
@@ -20,11 +19,11 @@ public class PacoteService {
     @Autowired
     private PacoteRepository pacoteRepository;
 
-    public Pacote getPacote(Long id){
+    public Pacote buscarPacotePorId(Long id){
         return pacoteRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Pacote não encontrado!"));
     }
 
-    public List<Pacote> getListaPacotes(){
+    public List<Pacote> listarPacotes(){
         return pacoteRepository.findAll();
     }
 
@@ -32,15 +31,16 @@ public class PacoteService {
         return pacoteRepository.save(pacote);
     }
 
-    public void atualizarPacote(Long id, Pacote pacote){
-        pacoteRepository.findById(id).map(obj -> {
-            pacote.setId(obj.getId());
+    public Pacote atualizarPacote(Long id, Pacote pacote){
+        pacote = buscarPacotePorId(id);
+        if (pacote != null){
             return pacoteRepository.save(pacote);
-        }).orElseThrow(() -> new ObjectNotFoundException("Pacote não encontrado!"));
+        }
+        throw new ObjectNotFoundException("Pacote não encontrado!");
     }
 
     public void deletarPacote(Long id) {
-        getPacote(id);
+        buscarPacotePorId(id);
         try{
             pacoteRepository.deleteById(id);
         }catch(DataIntegrityViolationException ex){
@@ -49,7 +49,7 @@ public class PacoteService {
     }
 
     public List<Pacote> pesquisarPacote(String descricao){
-        return pacoteRepository.pesquisa(descricao);
+        return pacoteRepository.pesquisar(descricao);
     }
 
     public List<Pacote> buscarUltimosPacotes(){
@@ -65,8 +65,8 @@ public class PacoteService {
         return pacoteRepository.findAll(pageRequest);
     }
 
-    public List<Pacote> findBycontratanteId(Long id){
-        return pacoteRepository.findBycontratanteId(id);
+    public List<Pacote> buscarPacotePorContratanteId(Long id){
+        return pacoteRepository.buscarPacotePorcontratanteId(id);
     }
 
 }

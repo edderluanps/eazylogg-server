@@ -19,17 +19,17 @@ public class AvaliacaoService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public List<Avaliacao> getListaAvaliacao(){
+    public List<Avaliacao> listaAvaliacao(){
         return avaliacaoRepository.findAll();
     }
 
-    public Avaliacao getAvaliacao(Long id){
+    public Avaliacao buscarAvaliacaoPorId(Long id){
         return avaliacaoRepository.findById(id).orElseThrow(()-> new ObjectNotFoundException("Avaliação não encontrada!"));
     }
 
-    public Double getMediaAvaliacao(Long id){
+    public Double buscarMediaAvaliacaoPorUsuarioId(Long id){
         Usuario user = usuarioRepository.findById(id).get();
-        Double avg = avaliacaoRepository.findAvgUser(user.getId());
+        Double avg = avaliacaoRepository.buscarMediaAvaliacao(user.getId());
         return avg;
     }
 
@@ -40,10 +40,12 @@ public class AvaliacaoService {
         return avaliacaoRepository.save(avaliacao);
     }
 
-    public void atualizarAvaliacao(Long id, Avaliacao avaliacao){
-        avaliacaoRepository.findById(id).map(obj -> {
-            avaliacao.setId(obj.getId());
+    public Avaliacao atualizarAvaliacao(Long id, Avaliacao avaliacao){
+        avaliacao = buscarAvaliacaoPorId(id);
+        if (avaliacao != null){
             return avaliacaoRepository.save(avaliacao);
-        }).orElseThrow(() -> new ObjectNotFoundException("Avaliação não encontrada!"));
+        }else{
+            throw new ObjectNotFoundException("Um usuário não pode se autoavaliar!");
+        }
     }
 }

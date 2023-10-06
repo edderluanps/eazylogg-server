@@ -28,28 +28,28 @@ public class UsuarioController {
 
     @ApiOperation(value = "Listar usuarios")
     @GetMapping
-    public List<UsuarioDTO> getAll() {
-        List<Usuario> lista = usuarioService.getListaUsuarios();
+    public List<UsuarioDTO> listarUsuarios() {
+        List<Usuario> lista = usuarioService.listarUsuarios();
         List<UsuarioDTO> listaDto = lista.stream().map(obj -> new UsuarioDTO(obj)).collect(Collectors.toList());
         return listaDto;
     }
 
     @ApiOperation(value = "Buscar usuario por id")
     @GetMapping("/{id}")
-    public Usuario getById(@PathVariable Long id) {
-        return usuarioService.getUsuario(id);
+    public Usuario buscarUsuarioPorId(@PathVariable Long id) {
+        return usuarioService.buscarUsuarioPorId(id);
     }
 
     @ApiOperation(value = "Buscar Entregador por id")
     @GetMapping("/entregador/{id}")
-    public UsuarioDTO getusUarioById(@PathVariable Long id) {
-        return usuarioService.getUsuarioDTO(id);
+    public UsuarioDTO buscarUsuarioEntregadorPorId(@PathVariable Long id) {
+        return usuarioService.usuarioToDto(id);
     }
 
     @ApiOperation(value = "Cadastrar usuario")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Usuario salvar(@RequestBody @Validated UsuarioNewDTO usuarioDTO){
+    public Usuario salvarUsuario(@RequestBody @Validated UsuarioNewDTO usuarioDTO){
         Usuario usuario = usuarioService.fromDTO(usuarioDTO);
         usuario = usuarioService.salvarUsuario(usuario);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(usuario.getId()).toUri();
@@ -59,7 +59,7 @@ public class UsuarioController {
     @ApiOperation(value = "Atualizar usuario")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizar(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO){
+    public void atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO){
         Usuario usuario = usuarioService.fromDTO(usuarioDTO);
         usuario.setId(id);
         usuario = usuarioService.atualizarUsuario(usuario);
@@ -72,14 +72,14 @@ public class UsuarioController {
     })    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id){
+    public void deletarUsuario(@PathVariable Long id){
         usuarioService.deletarUsuario(id);
     }
 
     @ApiOperation(value = "Buscar usuario por email")
     @GetMapping("/email")
-    public Usuario find(@RequestParam(value = "value") String email) {
-        Usuario usuario = usuarioService.findByEmail(email);
+    public Usuario buscarUsuarioPorEmail(@RequestParam(value = "value") String email) {
+        Usuario usuario = usuarioService.buscarUsuarioPorEmail(email);
         return usuario;
     }
 
@@ -93,9 +93,9 @@ public class UsuarioController {
 
     @ApiOperation(value = "Listar usuarios entregadores")
     @GetMapping("/entregadores")
-    public List<Usuario> listarUsuarioEntregador(
+    public List<Usuario> listaUsuarioEntragador(
             @RequestParam(value = "categoria", defaultValue = "") String categoria){
-        return usuarioService.getListaUsuarioEntragador( categoria);
+        return usuarioService.listaUsuarioEntragador( categoria);
     }
 
     @ApiOperation(value = "Paginação de usuário")

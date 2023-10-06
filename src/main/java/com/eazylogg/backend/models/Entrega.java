@@ -1,6 +1,7 @@
 package com.eazylogg.backend.models;
 
 import com.eazylogg.backend.models.enums.EntregaStatus;
+import com.eazylogg.backend.models.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -88,6 +89,102 @@ public class Entrega implements Serializable {
 
     public void setStatus(EntregaStatus status) {
         this.status = status.getCod();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Usuario getEntregadorId() {
+        return entregadorId;
+    }
+
+    public void setEntregadorId(Usuario entregadorId) {
+        this.entregadorId = entregadorId;
+    }
+
+    public Pacote getPacoteId() {
+        return pacoteId;
+    }
+
+    public void setPacoteId(Pacote pacoteId) {
+        this.pacoteId = pacoteId;
+    }
+
+    public LocalDate getDataColeta() {
+        return dataColeta;
+    }
+
+    public void setDataColeta(LocalDate dataColeta) {
+        this.dataColeta = dataColeta;
+    }
+
+    public LocalDate getDataEntrega() {
+        return dataEntrega;
+    }
+
+    public void setDataEntrega(LocalDate dataEntrega) {
+        this.dataEntrega = dataEntrega;
+    }
+
+    public Endereco getEnderecoColetaId() {
+        return enderecoColetaId;
+    }
+
+    public void setEnderecoColetaId(Endereco enderecoColetaId) {
+        this.enderecoColetaId = enderecoColetaId;
+    }
+
+    public Pagamento getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(Pagamento pagamento) {
+        this.pagamento = pagamento;
+    }
+
+    public Double getValor() {
+        return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
+    public Double getDesconto() {
+        return desconto;
+    }
+
+    public void setDesconto(Double desconto) {
+        this.desconto = desconto;
+    }
+
+    public String getObs() {
+        return obs;
+    }
+
+    public void setObs(String obs) {
+        this.obs = obs;
+    }
+
+    public String getCodRastreamento() {
+        return codRastreamento;
+    }
+
+    public void setCodRastreamento(String codRastreamento) {
+        this.codRastreamento = codRastreamento;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     @Override

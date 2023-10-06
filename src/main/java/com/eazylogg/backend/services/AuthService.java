@@ -18,9 +18,6 @@ public class AuthService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private EmailService emailService;
-
     private Random random = new Random();
 
     public void sendNewPassword(String email) {
@@ -33,7 +30,6 @@ public class AuthService {
         usuario.setSenha(bCryptPasswordEncoder.encode(newPassword));
 
         usuarioRepository.save(usuario);
-        //emailService.sendNewPasswordEmail(cliente, newPassword);
     }
 
     private String newPassword() {

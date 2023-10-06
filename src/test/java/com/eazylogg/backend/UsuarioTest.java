@@ -4,6 +4,7 @@ import com.eazylogg.backend.controllers.UsuarioController;
 import com.eazylogg.backend.models.Usuario;
 import com.eazylogg.backend.services.UsuarioService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -16,8 +17,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 
+@DisplayName("Testes - Usuario")
 @ExtendWith(MockitoExtension.class)
-public class UsuarioControllerTest {
+public class UsuarioTest {
 
     @InjectMocks
     private UsuarioController usuarioController;
@@ -42,13 +44,13 @@ public class UsuarioControllerTest {
         usuarioTest.setAtivo(true);
     }
 
+    @DisplayName("Deve salvar um usuario")
     @Test
-    void salvarUsuario(){
+    void salvarUsuario() throws Exception{
         when(usuarioService.salvarUsuario(usuarioTest)).thenReturn(usuarioTest);
         var response = assertDoesNotThrow(() -> usuarioService.salvarUsuario(usuarioTest));
         assertNotNull(response);
         assertEquals(usuarioTest, response);
-        System.out.println("Passou no teste");
     }
 
 }
